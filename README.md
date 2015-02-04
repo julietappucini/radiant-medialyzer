@@ -28,7 +28,7 @@ It features:
 
 #### Bower 
 
-`bower install magneticmediajs`
+`bower install radiant-medialyzer`
 
 #### GitHub 
 
