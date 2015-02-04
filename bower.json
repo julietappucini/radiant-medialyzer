@@ -1,0 +1,33 @@
+{
+    "name": "radiant-medialyzer",
+    "version": "1.1.0",
+    "homepage": "http://www.radiantmedialyzer.net",
+    "authors": [
+        "Arnaud Leyder <arnaud@leyder-consulting.com>"
+    ],
+    "description": "A JavaScript Media Features Detection Tool Kit",
+    "main": [
+        "src/js/rml.js",
+    ],
+    "moduleType": [
+        "globals"
+    ],
+    "keywords": [
+        "js",
+        "less",
+        "front-end",
+        "media",
+        "video",
+        "web"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "src/img",
+        "src/*.html",
+        "bower_components",
+        "test",
+        "tests"
+    ]
+}
