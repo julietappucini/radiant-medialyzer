@@ -1,4 +1,3 @@
-![GitHub Logo](https://www.radiantmediaplayer.com/images/radiantmedialyzer-github.png)
 # Radiant MediaLyzer
 Home Page: [http://www.radiantmedialyzer.net](http://www.radiantmedialyzer.net)
 
@@ -63,6 +62,8 @@ if (dash264) {
 }
 ```
 Done! :bowtie:
+
+![GitHub Logo](https://www.radiantmediaplayer.com/images/radiantmedialyzer-github.png)
 
 
 
