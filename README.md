@@ -62,8 +62,3 @@ if (dash264) {
 }
 ```
 Done! :bowtie:
-
-![GitHub Logo](https://www.radiantmediaplayer.com/images/radiantmedialyzer-github.png)
-
-
-
