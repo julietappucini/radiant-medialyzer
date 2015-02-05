@@ -1,4 +1,4 @@
-# Radiant MediaLyzer ![GitHub Logo](https://www.radiantmediaplayer.com/images/radiantmedialyzer-github-320.png)
+# Radiant MediaLyzer ![GitHub Logo](https://www.radiantmediaplayer.com/images/radiantmedialyzer-github.png)
 
 Home Page: [http://www.radiantmedialyzer.net](http://www.radiantmedialyzer.net)
 
