@@ -1,5 +1,5 @@
-# Radiant MediaLyzer ![GitHub Logo](https://www.radiantmediaplayer.com/images/radiantmedialyzer-github.png)
-
+![GitHub Logo](https://www.radiantmediaplayer.com/images/radiantmedialyzer-github.png)
+# Radiant MediaLyzer
 Home Page: [http://www.radiantmedialyzer.net](http://www.radiantmedialyzer.net)
 
 Radiant MediaLyzer is a JavaScript API to detect media features for web-based environnements.
