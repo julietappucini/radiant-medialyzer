@@ -22,7 +22,6 @@ with JSDoc 3 commented sources
 * Available on jsDelivr CDN or self-hosted
 * Available on bower: `bower install radiant-medialyzer`
 * Pick the whole library or browse the source code to get the function you need
-* Complete documentation with JSDoc 3 commented sources
 * Pick the whole library or browse the source code to get the function you need
 * Lightweight: only 8 kB minified (2kB gzipped)
 
