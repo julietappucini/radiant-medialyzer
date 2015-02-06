@@ -3,6 +3,10 @@ Home Page: [http://www.radiantmedialyzer.net](http://www.radiantmedialyzer.net)
 
 Radiant MediaLyzer is a JavaScript API to detect media features for web-based 
 environnements.
+
+It includes feature detection for MPEG-DASH, Apple HLS, 
+common video/audio codecs, HTML5 media elements, Web Audio API and more. 
+
 It will come in handy for any media oriented front-end JavaScript development. 
 
 Radiant MediaLyzer is an open source project released under 
@@ -11,7 +15,7 @@ and sponsored by [Radiant Media Player](https://www.radiantmediaplayer.com) a
 versatile HTML5 video player with support for live and on-demand streaming, 
 MPEG-DASH, video ads, call to actions and more.
 
-It features:
+Included features:
 * Media features detection for 34 media related features
 * Built with pure JavaScript (no dependency) and a pseudo-class model for 
 easier works of extension
