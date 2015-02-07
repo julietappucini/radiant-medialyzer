@@ -5,11 +5,11 @@
  * MIT Licensed http://www.radiantmedialyzer.net/license.html
  * Contact information http://www.radiantmedialyzer.net/about.html
  */
+
 /**
  * RadiantML class definition
  * @class
  */
-
 var RadiantML = (function () {
   "use strict";
   /**
@@ -132,8 +132,8 @@ var RadiantML = (function () {
    * User agent detection: Chrome browser + version
    * @public
    * @param {string} ua - user agent string
-   * @returns {Object} an Array as [boolean, Object] where boolean indicates if 
-   * Chrome browser is detected and Object is an Array holding the 
+   * @returns {Object} an Array as [boolean, Object] where boolean indicates if
+   * Chrome browser is detected and Object is an Array holding the
    * version [major, minor, pacth] or null if not available.
    */
   var _isChrome = function (ua) {
@@ -226,8 +226,8 @@ var RadiantML = (function () {
    * User agent: Internet Explorer browser
    * @public
    * @param {string} ua - user agent string
-   * @returns {Object} an Array as [boolean, Object] where boolean indicates 
-   * if Internet Explorer browser is detected and Object is an Array holding the 
+   * @returns {Object} an Array as [boolean, Object] where boolean indicates
+   * if Internet Explorer browser is detected and Object is an Array holding the
    * version [major, minor, pacth] or null if not available.
    */
   var _isIE = function (ua) {
@@ -253,8 +253,8 @@ var RadiantML = (function () {
    * User agent: Opera (15+ only) browser
    * @public
    * @param {string} ua - user agent string
-   * @returns {Object} an Array as [boolean, Object] where boolean indicates if 
-   * Opera browser is detected and Object is an Array holding the 
+   * @returns {Object} an Array as [boolean, Object] where boolean indicates if
+   * Opera browser is detected and Object is an Array holding the
    * version [major, minor, pacth] or null if not available.
    */
   var _isOpera = function (ua) {
