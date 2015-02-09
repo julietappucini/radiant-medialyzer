@@ -3,10 +3,10 @@ MIT License
 Radiant Medialyzer is released under MIT License.
 Terms are outlined below (from opensource.org)
 
-Copyright (c) 2014-2015 Arnaud Leyder | Leyder Consuling | https://www.leyder-consulting.com
-Sponsored by Radiant Media Player https://www.radiantmediaplayer.com
-MIT Licensed http://www.radiantmedialyzer.net/license.html
-Contact information http://www.radiantmedialyzer.net/about.html
+Radiant MediaLyzer | http://www.radiantmedialyzer.net
+Copyright (c) 2014-2015 Arnaud Leyder | Leyder Consuling 
+https://www.leyder-consulting.com
+MIT License http://www.radiantmedialyzer.net/license.html
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

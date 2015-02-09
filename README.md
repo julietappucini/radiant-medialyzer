@@ -23,8 +23,7 @@ with JSDoc 3 commented sources
 * Available on jsDelivr CDN or self-hosted
 * Available on bower: `bower install radiant-medialyzer`
 * Pick the whole library or browse the source code to get the function you need
-* Pick the whole library or browse the source code to get the function you need
-* Lightweight: only 8 kB minified (2.5kB gzipped)
+* Lightweight: only 6 kB minified (2kB gzipped)
 
 ## Complete documentation
 
@@ -43,7 +42,7 @@ Checkout sources or download ZIP package from GitHub
 
 #### jsDelivr
 
-```<script src="//cdn.jsdelivr.net/radiant-medialyzer/1.2.0/rml.min.js"></script>```
+```<script src="//cdn.jsdelivr.net/radiant-medialyzer/1.2.1/rml.min.js"></script>```
 
 ## Quick start guide
 
@@ -74,3 +73,7 @@ if (dash264) {
 }
 ```
 Done! :bowtie:
+
+## Contributors
+
+Thanks to @jcready for various code optimization

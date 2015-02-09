@@ -1,16 +1,15 @@
 /**
- * Radiant MediaLyzer 1.2.0 | http://www.radiantmedialyzer.net
- * Copyright (c) 2014-2015 Arnaud Leyder | Leyder Consuling | https://www.leyder-consulting.com
- * Sponsored by Radiant Media Player https://www.radiantmediaplayer.com
- * MIT Licensed http://www.radiantmedialyzer.net/license.html
- * Contact information http://www.radiantmedialyzer.net/about.html
+ * Radiant MediaLyzer 1.2.1 | http://www.radiantmedialyzer.net
+ * Copyright (c) 2014-2015 Arnaud Leyder | Leyder Consuling
+ * https://www.leyder-consulting.com
+ * MIT License http://www.radiantmedialyzer.net/license.html
  */
 
 /**
  * RadiantML class definition
  * @class
  */
-var RadiantML = (function () {
+var RadiantML = (function (win, doc, nav) {
   "use strict";
   /**
    * Creates an instance of RadiantML
@@ -21,9 +20,207 @@ var RadiantML = (function () {
     this._plugins = _getPlugins();
     this._mimeTypes = _getMimeTypes();
     this._standalone = _getStandaloneMode();
+    this._video = doc.createElement('video');
+    this._audio = doc.createElement('audio');
+    this._canvas = doc.createElement('canvas');
   }
 
   /**** private methods start here ****/
+  /**
+   * Obtain user agent string
+   * @private
+   * @returns {string|null} user agent string or null
+   */
+  var _getUserAgent = function () {
+    return nav.userAgent || null;
+  };
+  /**
+   * Obtain user agent plugins list
+   * @private
+   * @returns {Object|null} PluginArray or null
+   */
+  var _getPlugins = function () {
+    if (!!nav.plugins && nav.plugins.length > 0) {
+      return nav.plugins;
+    }
+    return null;
+  };
+  /**
+   * Obtain user agent mime types list
+   * @private
+   * @returns {Object|null} MimeTypeArray or null
+   */
+  var _getMimeTypes = function () {
+    if (!!nav.mimeTypes && nav.mimeTypes.length > 0) {
+      return nav.mimeTypes;
+    }
+    return null;
+  };
+  /**
+   * Obtain user agent standalone mode (iOS only)
+   * @private
+   * @returns {boolean|null} is in standalone mode or null
+   */
+  var _getStandaloneMode = function () {
+    return nav.standalone || null;
+  };
+  /**
+   * Can play type (MIME types) method for HTML5 media elements
+   * @private
+   * @param {string} element - the HTML5 media element to be tested
+   * @param {string} mime - the MIME type to be tested
+   * @param {string} strict - level of support to test ('probably' or/and 'maybe')
+   * @returns {boolean} the MIME type is supported or not
+   */
+  var _canPlayType = function (element, mime, strict, context) {
+    var testElement = context._video;
+    if (element === 'audio') {
+      testElement = context._audio;
+    }
+    if ((strict && testElement.canPlayType(mime) === 'probably') ||
+        (!strict && testElement.canPlayType(mime) !== '')) {
+      return true;
+    }
+    return false;
+  };
+  /**
+   * User agent detection: Native (stock) Android browser
+   * @private
+   * @param {string} ua - user agent string
+   * @returns {boolean} true if native Android browser detected, false otherwise
+   */
+  var _isNativeAndroidBrowser = function (ua) {
+    var isAndroid = _isAndroid();
+    if (isAndroid[0]) {
+      var pattern1 = /(?=.*mozilla\/5.0)(?=.*applewebkit)(?=.*android)/i;
+      var pattern2 = /chrome/i;
+      if (pattern1.test(ua) && !pattern2.test(ua)) {
+        return true;
+      }
+    }
+    return false;
+  };
+  /**
+   * User agent detection: Chrome browser + version
+   * @public
+   * @param {string} ua - user agent string
+   * @returns {Object} an Array as [boolean, Object] where boolean indicates if
+   * Chrome browser is detected and Object is an Array holding the
+   * version [major, minor, pacth] or null if not available.
+   */
+  var _isChrome = function (ua) {
+    var isChrome = false;
+    var chromeVersion = null;
+    var support = [isChrome, chromeVersion];
+    var windowChrome = !!win.chrome;
+    var pattern;
+    if (!_isNativeAndroidBrowser()) {
+      if (windowChrome) {
+        // Opera returns true on !!window.chrome
+        pattern = /(opr|opera)/i;
+        if (!pattern.test(ua)) {
+          isChrome = true;
+        }
+      }
+    }
+    if (isChrome) {
+      pattern = /chrome\/(\d+)\.(\d+)\.?(\d+)?/i;
+      var versionArray = ua.match(pattern);
+      if (!!versionArray) {
+        chromeVersion = [
+          parseInt(versionArray[1], 10),
+          parseInt(versionArray[2], 10),
+          parseInt(versionArray[3] || 0, 10)
+        ];
+      }
+      support = [isChrome, chromeVersion];
+    }
+    return support;
+  };
+  /**
+   * User agent: Android + version
+   * @private
+   * @param {string} ua - user agent string
+   * @returns {Object} an Array as [boolean, Object] where boolean indicates if Android
+   * is detected and Object is an Array holding the version [major, minor, pacth] or
+   * null if not available.
+   */
+  var _isAndroid = function (ua) {
+    var isAndroid = false;
+    var androidVersion = null;
+    var support = [isAndroid, androidVersion];
+    var pattern = /android/i;
+    if (pattern.test(ua)) {
+      isAndroid = true;
+      pattern = /android\s(\d+)\.(\d+)\.?(\d+)?/i;
+      var versionArray = ua.match(pattern);
+      if (!!versionArray) {
+        androidVersion = [
+          parseInt(versionArray[1], 10),
+          parseInt(versionArray[2], 10),
+          parseInt(versionArray[3] || 0, 10)
+        ];
+      }
+      support = [isAndroid, androidVersion];
+    }
+    return support;
+  };
+  /**
+   * User agent: Internet Explorer browser
+   * @public
+   * @param {string} ua - user agent string
+   * @returns {Object} an Array as [boolean, Object] where boolean indicates
+   * if Internet Explorer browser is detected and Object is an Array holding the
+   * version [major, minor, pacth] or null if not available.
+   */
+  var _isIE = function (ua) {
+    var isIE = false;
+    var ieVersion = null;
+    var pattern = /(msie|trident)/i;
+    if (pattern.test(ua)) {
+      isIE = true;
+      pattern = /msie/i;
+      if (pattern.test(ua)) {
+        var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+        if (re.exec(ua) !== null) {
+          ieVersion = parseFloat(RegExp.$1);
+        }
+      } else {
+        ieVersion = 11;
+      }
+
+    }
+    return [isIE, [ieVersion, 0, 0]];
+  };
+  /**
+   * User agent: Opera (15+ only) browser
+   * @public
+   * @param {string} ua - user agent string
+   * @returns {Object} an Array as [boolean, Object] where boolean indicates if
+   * Opera browser is detected and Object is an Array holding the
+   * version [major, minor, pacth] or null if not available.
+   */
+  var _isOpera = function (ua) {
+    var isOpera = false;
+    var operaVersion = null;
+    var support = [isOpera, operaVersion];
+    // includes iOS opera detection
+    var pattern = /(opr|opios)/i;
+    if (pattern.test(ua)) {
+      isOpera = true;
+      pattern = /opr\/(\d+)\.(\d+)\.?(\d+)?/i;
+      var versionArray = ua.match(pattern);
+      if (!!versionArray) {
+        operaVersion = [
+          parseInt(versionArray[1], 10),
+          parseInt(versionArray[2], 10),
+          parseInt(versionArray[3] || 0, 10)
+        ];
+      }
+      support = [isOpera, operaVersion];
+    }
+    return support;
+  };
   /**
    * Get plugin version from version property
    * @private
@@ -66,217 +263,6 @@ var RadiantML = (function () {
       }
     }
     return null;
-  };
-  /**
-   * Obtain user agent string
-   * @private
-   * @returns {string|null} user agent string or null
-   */
-  var _getUserAgent = function () {
-    if (!!window.navigator.userAgent) {
-      return window.navigator.userAgent;
-    }
-    return null;
-  };
-  /**
-   * Obtain user agent plugins list
-   * @private
-   * @returns {Object|null} PluginArray or null
-   */
-  var _getPlugins = function () {
-    if (!!window.navigator.plugins && window.navigator.plugins.length > 0) {
-      return window.navigator.plugins;
-    }
-    return null;
-  };
-  /**
-   * Obtain user agent mime types list
-   * @private
-   * @returns {Object|null} MimeTypeArray or null
-   */
-  var _getMimeTypes = function () {
-    if (!!window.navigator.mimeTypes && window.navigator.mimeTypes.length > 0) {
-      return window.navigator.mimeTypes;
-    }
-    return null;
-  };
-  /**
-   * Obtain user agent standalone mode (iOS only)
-   * @private
-   * @returns {boolean|null} is in standalone mode or null
-   */
-  var _getStandaloneMode = function () {
-    if (!!window.navigator.standalone) {
-      return window.navigator.standalone;
-    }
-    return null;
-  };
-  /**
-   * User agent detection: Native (stock) Android browser
-   * @private
-   * @param {string} ua - user agent string
-   * @returns {boolean} true if native Android browser detected, false otherwise
-   */
-  var _isNativeAndroidBrowser = function (ua) {
-    var isAndroid = _isAndroid();
-    if (isAndroid[0]) {
-      var pattern1 = /(?=.*mozilla\/5.0)(?=.*applewebkit)(?=.*android)/i;
-      var pattern2 = /chrome/i;
-      if (pattern1.test(ua) && !pattern2.test(ua)) {
-        return true;
-      }
-    }
-    return false;
-  };
-  /**
-   * User agent detection: Chrome browser + version
-   * @public
-   * @param {string} ua - user agent string
-   * @returns {Object} an Array as [boolean, Object] where boolean indicates if
-   * Chrome browser is detected and Object is an Array holding the
-   * version [major, minor, pacth] or null if not available.
-   */
-  var _isChrome = function (ua) {
-    var isChrome = false;
-    var chromeVersion = null;
-    var support = [isChrome, chromeVersion];
-    var windowChrome = !!window.chrome;
-    // check it is not a WebView
-    if (!_isNativeAndroidBrowser()) {
-      if (windowChrome) {
-        // Opera returns true on !!window.chrome
-        var pattern = /(opr|opera)/i;
-        if (!pattern.test(ua)) {
-          isChrome = true;
-        }
-      }
-    }
-    if (isChrome) {
-      var pattern = /chrome\/(\d+)\.(\d+)\.?(\d+)?/i;
-      var versionArray = ua.match(pattern);
-      if (!!versionArray) {
-        chromeVersion = [
-          parseInt(versionArray[1], 10),
-          parseInt(versionArray[2], 10),
-          parseInt(versionArray[3] || 0, 10)
-        ];
-      }
-      support = [isChrome, chromeVersion];
-    }
-    return support;
-  };
-  /**
-   * User agent detection: iOS + version
-   * @private
-   * @param {string} ua - user agent string
-   * @returns {Object} an Array as [boolean, Object] where boolean indicates if iOS
-   * is detected and Object is an Array holding the version [major, minor, pacth] or
-   * null if not available.
-   */
-  var _isIOS = function (ua) {
-    var isIOS = false;
-    var iOSVersion = null;
-    var support = [isIOS, iOSVersion];
-    var pattern = /(ipad|iphone|ipod|apple tv)/i;
-    if (pattern.test(ua)) {
-      isIOS = true;
-      var pattern = /os\s(\d+)_(\d+)_?(\d+)?/i;
-      var versionArray = ua.match(pattern);
-      if (!!versionArray) {
-        iOSVersion = [
-          parseInt(versionArray[1], 10),
-          parseInt(versionArray[2], 10),
-          parseInt(versionArray[3] || 0, 10)
-        ];
-      }
-      support = [isIOS, iOSVersion];
-    }
-    return support;
-  };
-  /**
-   * User agent: Android + version
-   * @private
-   * @param {string} ua - user agent string
-   * @returns {Object} an Array as [boolean, Object] where boolean indicates if Android
-   * is detected and Object is an Array holding the version [major, minor, pacth] or
-   * null if not available.
-   */
-  var _isAndroid = function (ua) {
-    var isAndroid = false;
-    var androidVersion = null;
-    var support = [isAndroid, androidVersion];
-    var pattern = /android/i;
-    ;
-    if (pattern.test(ua)) {
-      isAndroid = true;
-      var pattern = /android\s(\d+)\.(\d+)\.?(\d+)?/i;
-      var versionArray = ua.match(pattern);
-      if (!!versionArray) {
-        androidVersion = [
-          parseInt(versionArray[1], 10),
-          parseInt(versionArray[2], 10),
-          parseInt(versionArray[3] || 0, 10)
-        ];
-      }
-      support = [isAndroid, androidVersion];
-    }
-    return support;
-  };
-  /**
-   * User agent: Internet Explorer browser
-   * @public
-   * @param {string} ua - user agent string
-   * @returns {Object} an Array as [boolean, Object] where boolean indicates
-   * if Internet Explorer browser is detected and Object is an Array holding the
-   * version [major, minor, pacth] or null if not available.
-   */
-  var _isIE = function (ua) {
-    var isIE = false;
-    var ieVersion = null;
-    var pattern = /(msie|trident)/i;
-    var pattern1 = /msie/i;
-    if (pattern.test(ua)) {
-      isIE = true;
-      if (pattern1.test(ua)) {
-        var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
-        if (re.exec(ua) !== null) {
-          ieVersion = parseFloat(RegExp.$1);
-        }
-      } else {
-        ieVersion = 11;
-      }
-
-    }
-    return [isIE, [ieVersion, 0, 0]];
-  };
-  /**
-   * User agent: Opera (15+ only) browser
-   * @public
-   * @param {string} ua - user agent string
-   * @returns {Object} an Array as [boolean, Object] where boolean indicates if
-   * Opera browser is detected and Object is an Array holding the
-   * version [major, minor, pacth] or null if not available.
-   */
-  var _isOpera = function (ua) {
-    var isOpera = false;
-    var operaVersion = null;
-    var support = [isOpera, operaVersion];
-    // includes iOS opera detection
-    var pattern = /(opr|opios)/i;
-    if (pattern.test(ua)) {
-      isOpera = true;
-      var pattern = /opr\/(\d+)\.(\d+)\.?(\d+)?/i;
-      var versionArray = ua.match(pattern);
-      if (!!versionArray) {
-        operaVersion = [
-          parseInt(versionArray[1], 10),
-          parseInt(versionArray[2], 10),
-          parseInt(versionArray[3] || 0, 10)
-        ];
-      }
-      support = [isOpera, operaVersion];
-    }
-    return support;
   };
 
   /**** public methods start here ****/
@@ -321,7 +307,7 @@ var RadiantML = (function () {
    * @returns {boolean} has HTML5 video tag support (or not)
    */
   RadiantML.prototype.video5 = function () {
-    return !!document.createElement('video').canPlayType;
+    return !!this._video.canPlayType;
   };
   /**
    * Feature: mp4 with H264 baseline video and AAC low complexity audio
@@ -330,25 +316,21 @@ var RadiantML = (function () {
    * @returns {boolean} has mp4/H264 (with the param profile) support in HTML5 video (or not)
    */
   RadiantML.prototype.mp4H264AAC = function (profile) {
-    var videoCodec = 'avc1.42E01E'; // baseline profile
+    var videoCodec = 'avc1.42E01E'; // baseline 3.0 profile
     if (!!profile) {
-      if (profile === 'main30') {
+      if (profile === 'main30') { // main 3.0 profile
         videoCodec = 'avc1.4D401E';
-      } else if (profile === 'high30') {
+      } else if (profile === 'high30') { // high 3.0 profile
         videoCodec = 'avc1.64001E';
-      } else if (profile === 'high40') {
+      } else if (profile === 'high40') { // high 4.0 profile
         videoCodec = 'avc1.640028';
-      } else if (profile === 'high50') {
+      } else if (profile === 'high50') { // high 5.0 profile
         videoCodec = 'avc1.640032';
       }
     }
+    var mimeType = 'video/mp4; codecs="' + videoCodec + ',mp4a.40.2"';
     if (this.video5()) {
-      var canPlayType = document.
-          createElement('video').
-          canPlayType('video/mp4; codecs="' + videoCodec + ',mp4a.40.2"');
-      if (canPlayType  === 'probably') {
-        return true;
-      }
+      return _canPlayType('video', mimeType, true, this);
     }
     return false;
   };
@@ -359,12 +341,12 @@ var RadiantML = (function () {
    */
   RadiantML.prototype.webmVP8Vorbis = function () {
     if (this.video5()) {
-      var canPlayType = document.
-          createElement('video').
-          canPlayType('video/webm; codecs="vp8, vorbis"');
-      if (canPlayType  === 'probably') {
-        return true;
-      }
+      return _canPlayType(
+          'video',
+          'video/webm; codecs="vp8, vorbis"',
+          true,
+          this
+          );
     }
     return false;
   };
@@ -375,12 +357,12 @@ var RadiantML = (function () {
    */
   RadiantML.prototype.webmVP9Opus = function () {
     if (this.video5()) {
-      var canPlayType = document.
-          createElement('video').
-          canPlayType('video/webm; codecs="vp9, opus"');
-      if (canPlayType  === 'probably') {
-        return true;
-      }
+      return _canPlayType(
+          'video',
+          'video/webm; codecs="vp9, opus"',
+          true,
+          this
+          );
     }
     return false;
   };
@@ -391,12 +373,12 @@ var RadiantML = (function () {
    */
   RadiantML.prototype.oggTheoraVorbis = function () {
     if (this.video5()) {
-      var canPlayType = document.
-          createElement('video').
-          canPlayType('video/ogg; codecs="theora, vorbis"');
-      if (canPlayType  === 'probably') {
-        return true;
-      }
+      return _canPlayType(
+          'video',
+          'video/ogg; codecs="theora, vorbis"',
+          true,
+          this
+          );
     }
     return false;
   };
@@ -406,10 +388,10 @@ var RadiantML = (function () {
    * @returns {boolean} has native fullscreen support (or not)
    */
   RadiantML.prototype.nativeFS = function () {
-    var fs = document.documentElement.requestFullscreen ||
-        document.documentElement.mozRequestFullScreen ||
-        document.documentElement.webkitRequestFullscreen ||
-        document.documentElement.msRequestFullscreen;
+    var fs = doc.documentElement.requestFullscreen ||
+        doc.documentElement.mozRequestFullScreen ||
+        doc.documentElement.webkitRequestFullscreen ||
+        doc.documentElement.msRequestFullscreen;
     return !!fs;
   };
   /**
@@ -418,7 +400,7 @@ var RadiantML = (function () {
    * @returns {boolean} has HTML5 audio tag support (or not)
    */
   RadiantML.prototype.audio5 = function () {
-    return !!document.createElement('audio').canPlayType;
+    return !!this._audio.canPlayType;
   };
   /**
    * Feature: M4A/AAC audio
@@ -427,12 +409,12 @@ var RadiantML = (function () {
    */
   RadiantML.prototype.m4aAAC = function () {
     if (this.audio5()) {
-      var canPlayType = document.
-          createElement('audio').
-          canPlayType('audio/mp4; codecs="mp4a.40.2"');
-      if (canPlayType  === 'probably') {
-        return true;
-      }
+      return _canPlayType(
+          'audio',
+          'audio/mp4; codecs="mp4a.40.2"',
+          true,
+          this
+          );
     }
     return false;
   };
@@ -443,12 +425,12 @@ var RadiantML = (function () {
    */
   RadiantML.prototype.mp3 = function () {
     if (this.audio5()) {
-      var canPlayType = document.
-          createElement('audio').
-          canPlayType('audio/mpeg');
-      if (!!canPlayType) {
-        return true;
-      }
+      return _canPlayType(
+          'audio',
+          'audio/mpeg',
+          false,
+          this
+          );
     }
     return false;
   };
@@ -459,12 +441,12 @@ var RadiantML = (function () {
    */
   RadiantML.prototype.oggVorbis = function () {
     if (this.audio5()) {
-      var canPlayType = document.
-          createElement('audio').
-          canPlayType('audio/ogg; codecs="vorbis"');
-      if (canPlayType  === 'probably') {
-        return true;
-      }
+      return _canPlayType(
+          'audio',
+          'audio/ogg; codecs="vorbis"',
+          true,
+          this
+          );
     }
     return false;
   };
@@ -475,12 +457,12 @@ var RadiantML = (function () {
    */
   RadiantML.prototype.webmOpus = function () {
     if (this.audio5()) {
-      var canPlayType = document.
-          createElement('audio').
-          canPlayType('audio/webm; codecs="opus"');
-      if (canPlayType  === 'probably') {
-        return true;
-      }
+      return _canPlayType(
+          'audio',
+          'audio/webm; codecs="opus"',
+          true,
+          this
+          );
     }
     return false;
   };
@@ -491,12 +473,12 @@ var RadiantML = (function () {
    */
   RadiantML.prototype.wavPCM = function () {
     if (this.audio5()) {
-      var canPlayType = document.
-          createElement('audio').
-          canPlayType('audio/wav');
-      if (!!canPlayType) {
-        return true;
-      }
+      return _canPlayType(
+          'audio',
+          'audio/wav',
+          false,
+          this
+          );
     }
     return false;
   };
@@ -506,10 +488,10 @@ var RadiantML = (function () {
    * @returns {boolean} has Web Audio API support (or not)
    */
   RadiantML.prototype.webAudio = function () {
-    var audioContext = window.AudioContext ||
-        window.webkitAudioContext ||
-        window.mozAudioContext ||
-        window.msAudioContext;
+    var audioContext = win.AudioContext ||
+        win.webkitAudioContext ||
+        win.mozAudioContext ||
+        win.msAudioContext;
     return !!audioContext;
   };
   /**
@@ -518,7 +500,7 @@ var RadiantML = (function () {
    * @returns {boolean} has Media Source Extensions support (or not)
    */
   RadiantML.prototype.mse = function () {
-    var mse = "MediaSource" in window || "WebKitMediaSource" in window;
+    var mse = "MediaSource" in win || "WebKitMediaSource" in win;
     return !!mse;
   };
   /**
@@ -527,7 +509,9 @@ var RadiantML = (function () {
    * @returns {boolean} has Encrypted Media Extensions support (or not)
    */
   RadiantML.prototype.eme = function () {
-    var eme = "MediaKeys" in window || "WebKitMediaKeys" in window || "MSMediaKeys" in window;
+    var eme = "MediaKeys" in win ||
+        "WebKitMediaKeys" in win ||
+        "MSMediaKeys" in win;
     return !!eme;
   };
   /**
@@ -536,10 +520,10 @@ var RadiantML = (function () {
    * @returns {boolean} has getUserMedia API support (or not)
    */
   RadiantML.prototype.getUserMedia = function () {
-    var getUserMedia = navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia ||
-        navigator.msGetUserMedia;
+    var getUserMedia = nav.getUserMedia ||
+        nav.webkitGetUserMedia ||
+        nav.mozGetUserMedia ||
+        nav.msGetUserMedia;
     return !!getUserMedia;
   };
   /**
@@ -548,10 +532,10 @@ var RadiantML = (function () {
    * @returns {boolean} has RTCPeerConnection API support (or not)
    */
   RadiantML.prototype.rtcPeerConnection = function () {
-    var RTCPeerConnection = window.RTCPeerConnection ||
-        window.mozRTCPeerConnection ||
-        window.webkitRTCPeerConnection ||
-        window.msRTCPeerConnection;
+    var RTCPeerConnection = win.RTCPeerConnection ||
+        win.mozRTCPeerConnection ||
+        win.webkitRTCPeerConnection ||
+        win.msRTCPeerConnection;
     return !!RTCPeerConnection;
   };
   /**
@@ -560,10 +544,10 @@ var RadiantML = (function () {
    * @returns {boolean} has RTCSessionDescription API support (or not)
    */
   RadiantML.prototype.rtcSessionDescription = function () {
-    var RTCSessionDescription = window.RTCSessionDescription ||
-        window.mozRTCSessionDescription ||
-        window.webkitRTCSessionDescription ||
-        window.msRTCSessionDescription;
+    var RTCSessionDescription = win.RTCSessionDescription ||
+        win.mozRTCSessionDescription ||
+        win.webkitRTCSessionDescription ||
+        win.msRTCSessionDescription;
     return !!RTCSessionDescription;
   };
   /**
@@ -572,7 +556,7 @@ var RadiantML = (function () {
    * @returns {boolean} has WebSocket API support (or not)
    */
   RadiantML.prototype.webSocket = function () {
-    var WebSocket = window.WebSocket || window.MozWebSocket;
+    var WebSocket = win.WebSocket || win.MozWebSocket;
     return !!WebSocket;
   };
   /**
@@ -581,7 +565,7 @@ var RadiantML = (function () {
    * @returns {boolean} has Web Worker API support (or not)
    */
   RadiantML.prototype.webWorker = function () {
-    var webWorker = window.Worker;
+    var webWorker = win.Worker;
     return !!webWorker;
   };
   /**
@@ -592,9 +576,9 @@ var RadiantML = (function () {
   RadiantML.prototype.webStorage = function () {
     //try/catch to fix a bug in older versions of Firefox
     try {
-      if (typeof window.localStorage !== 'undefined' &&
-          window['localStorage'] !== null &&
-          typeof window.sessionStorage !== 'undefined') {
+      if (typeof win.localStorage !== 'undefined' &&
+          win['localStorage'] !== null &&
+          typeof win.sessionStorage !== 'undefined') {
         return true;
       } else {
         return false;
@@ -609,7 +593,7 @@ var RadiantML = (function () {
    * @returns {boolean} has canvas element support (or not)
    */
   RadiantML.prototype.canvas = function () {
-    return !!document.createElement('canvas').getContext;
+    return !!this._canvas.getContext;
   };
   /**
    * Feature: canvas text API support
@@ -618,7 +602,7 @@ var RadiantML = (function () {
    */
   RadiantML.prototype.canvasText = function () {
     if (this.canvas()) {
-      var context = document.createElement('canvas').getContext('2d');
+      var context = this._canvas.getContext('2d');
       return typeof context.fillText === 'function';
     }
     return false;
@@ -630,7 +614,7 @@ var RadiantML = (function () {
    */
   RadiantML.prototype.canvasBlending = function () {
     if (this.canvas()) {
-      var context = document.createElement('canvas').getContext('2d');
+      var context = this._canvas.getContext('2d');
       context.globalCompositeOperation = 'screen';
       return context.globalCompositeOperation === 'screen';
     }
@@ -643,7 +627,7 @@ var RadiantML = (function () {
    */
   RadiantML.prototype.canvasWebGL = function () {
     if (this.canvas()) {
-      var canvas = document.createElement('canvas'), context;
+      var canvas = this._canvas, context;
       try {
         context = canvas.getContext('webgl');
         return true;
@@ -689,7 +673,7 @@ var RadiantML = (function () {
     } else if (this._plugins) {
       // check by plugin direct name first as explained
       // on https://developer.mozilla.org/en-US/docs/Web/API/NavigatorPlugins.plugins
-      var flash = navigator.plugins['Shockwave Flash'];
+      var flash = nav.plugins['Shockwave Flash'];
       if (!!flash) {
         hasFlash = true;
         if (!!flash.version) {
@@ -701,7 +685,7 @@ var RadiantML = (function () {
       }
     } else if (this._mimeTypes) {
       // check by mimeTypes as a fallback
-      var flash = navigator.mimeTypes['application/x-shockwave-flash'];
+      var flash = nav.mimeTypes['application/x-shockwave-flash'];
       if (!!flash && flash.enabledPlugin) {
         hasFlash = true;
         if (!!flash.enabledPlugin.description) {
@@ -722,22 +706,20 @@ var RadiantML = (function () {
    */
   RadiantML.prototype.hlsVideo = function () {
     if (this.video5()) {
-      var _rawHlsVideo = function () {
-        var canPlayType = document.
-            createElement('video').
-            canPlayType('application/vnd.apple.mpegurl');
-        if (!!canPlayType) {
-          return true;
-        }
-        return false;
-      };
+      // HLS video MIME type as per
+      // https://tools.ietf.org/html/draft-pantos-http-live-streaming-14
+      var hlsVideoMimeType = _canPlayType('video',
+          'application/vnd.apple.mpegurl',
+          false,
+          this
+          );
       var ua = this.getUserAgent();
       var isAndroid = _isAndroid(ua);
-      var isIOS = _isIOS(ua);
-      // iOS and Android 4+ are sure ok
-      if (isIOS[0] ||
-          (isAndroid[0] && isAndroid[1][0] >= 4) ||
-          _rawHlsVideo()) {
+      // Android before 4.0.0 just do not handle HLS well
+      if (isAndroid[0] && isAndroid[1][0] < 4) {
+        return false;
+      }
+      if (hlsVideoMimeType) {
         return true;
       }
     }
@@ -751,22 +733,20 @@ var RadiantML = (function () {
    */
   RadiantML.prototype.hlsAudio = function () {
     if (this.audio5()) {
-      var _rawHlsAudio = function () {
-        var canPlayType = document.
-            createElement('audio').
-            canPlayType('audio/mpegurl');
-        if (!!canPlayType) {
-          return true;
-        }
-        return false;
-      };
+      // HLS audio MIME type as per
+      // https://tools.ietf.org/html/draft-pantos-http-live-streaming-14
+      var hlsAudioMimeType = _canPlayType('audio',
+          'audio/mpegurl',
+          false,
+          this
+          );
       var ua = this.getUserAgent();
       var isAndroid = _isAndroid(ua);
-      var isIOS = _isIOS(ua);
-      // iOS and Android 4+ are sure ok
-      if (isIOS[0] ||
-          (isAndroid[0] && isAndroid[1][0] >= 4) ||
-          _rawHlsAudio()) {
+      // Android before 4.0.0 just do not handle HLS well
+      if (isAndroid[0] && isAndroid[1][0] < 4) {
+        return false;
+      }
+      if (hlsAudioMimeType) {
         return true;
       }
     }
@@ -793,7 +773,7 @@ var RadiantML = (function () {
           isChrome[0] && isChrome[1][0] >= 34) {
         return true;
       }
-      // Default should be ok
+      // Default should be ok for the rest
       if (this.mse() && this.mp4H264AAC()) {
         return true;
       }
@@ -816,4 +796,4 @@ var RadiantML = (function () {
 
   return RadiantML;
 
-})();
+})(window, document, navigator);

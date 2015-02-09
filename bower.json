@@ -1,33 +1,33 @@
 {
-    "name": "radiant-medialyzer",
-    "version": "1.2.0",
-    "homepage": "http://www.radiantmedialyzer.net",
-    "authors": [
-        "Arnaud Leyder <arnaud@leyder-consulting.com>"
-    ],
-    "description": "A JavaScript Media Features Detection Tool Kit",
-    "main": [
-        "src/rml.js"
-    ],
-    "moduleType": [
-        "globals"
-    ],
-    "keywords": [
-        "js",
-        "api",
-        "front-end",
-        "media",
-        "video",
-        "web"
-    ],
-    "license": "MIT",
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "src/img",
-        "src/*.html",
-        "bower_components",
-        "test",
-        "tests"
-    ]
+  "name": "radiant-medialyzer",
+  "version": "1.2.1",
+  "homepage": "http://www.radiantmedialyzer.net",
+  "authors": [
+    "Arnaud Leyder <arnaud@leyder-consulting.com>"
+  ],
+  "description": "A JavaScript Media Features Detection Tool Kit",
+  "main": [
+    "src/rml.js"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "js",
+    "api",
+    "front-end",
+    "media",
+    "video",
+    "web"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "src/img",
+    "src/*.html",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }
