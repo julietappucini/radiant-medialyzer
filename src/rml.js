@@ -1,7 +1,7 @@
 /**
- * Radiant MediaLyzer 1.2.1 | http://www.radiantmedialyzer.net
- * Copyright (c) 2014-2015 Arnaud Leyder | Leyder Consuling
- * https://www.leyder-consulting.com
+ * Radiant MediaLyzer 1.2.2 | http://www.radiantmedialyzer.net
+ * Copyright (c) 2014-2015  Radiant Media Player | Arnaud Leyder EIRL
+ * https://www.radiantmediaplayer.com/
  * MIT License http://www.radiantmedialyzer.net/license.html
  */
 
@@ -84,88 +84,6 @@ var RadiantML = (function (win, doc, nav) {
     return false;
   };
   /**
-   * User agent detection: Native (stock) Android browser
-   * @private
-   * @param {string} ua - user agent string
-   * @returns {boolean} true if native Android browser detected, false otherwise
-   */
-  var _isNativeAndroidBrowser = function (ua) {
-    var isAndroid = _isAndroid();
-    if (isAndroid[0]) {
-      var pattern1 = /(?=.*mozilla\/5.0)(?=.*applewebkit)(?=.*android)/i;
-      var pattern2 = /chrome/i;
-      if (pattern1.test(ua) && !pattern2.test(ua)) {
-        return true;
-      }
-    }
-    return false;
-  };
-  /**
-   * User agent detection: Chrome browser + version
-   * @public
-   * @param {string} ua - user agent string
-   * @returns {Object} an Array as [boolean, Object] where boolean indicates if
-   * Chrome browser is detected and Object is an Array holding the
-   * version [major, minor, pacth] or null if not available.
-   */
-  var _isChrome = function (ua) {
-    var isChrome = false;
-    var chromeVersion = null;
-    var support = [isChrome, chromeVersion];
-    var windowChrome = !!win.chrome;
-    var pattern;
-    if (!_isNativeAndroidBrowser()) {
-      if (windowChrome) {
-        // Opera returns true on !!window.chrome
-        pattern = /(opr|opera)/i;
-        if (!pattern.test(ua)) {
-          isChrome = true;
-        }
-      }
-    }
-    if (isChrome) {
-      pattern = /chrome\/(\d+)\.(\d+)\.?(\d+)?/i;
-      var versionArray = ua.match(pattern);
-      if (!!versionArray) {
-        chromeVersion = [
-          parseInt(versionArray[1], 10),
-          parseInt(versionArray[2], 10),
-          parseInt(versionArray[3] || 0, 10)
-        ];
-      }
-      support = [isChrome, chromeVersion];
-    }
-    return support;
-  };
-  /**
-   * User agent: Android + version
-   * @private
-   * @param {string} ua - user agent string
-   * @returns {Object} an Array as [boolean, Object] where boolean indicates if Android
-   * is detected and Object is an Array holding the version [major, minor, pacth] or
-   * null if not available.
-   */
-  var _isAndroid = function (ua) {
-    var isAndroid = false;
-    var androidVersion = null;
-    var support = [isAndroid, androidVersion];
-    var pattern = /android/i;
-    if (pattern.test(ua)) {
-      isAndroid = true;
-      pattern = /android\s(\d+)\.(\d+)\.?(\d+)?/i;
-      var versionArray = ua.match(pattern);
-      if (!!versionArray) {
-        androidVersion = [
-          parseInt(versionArray[1], 10),
-          parseInt(versionArray[2], 10),
-          parseInt(versionArray[3] || 0, 10)
-        ];
-      }
-      support = [isAndroid, androidVersion];
-    }
-    return support;
-  };
-  /**
    * User agent: Internet Explorer browser
    * @public
    * @param {string} ua - user agent string
@@ -191,35 +109,6 @@ var RadiantML = (function (win, doc, nav) {
 
     }
     return [isIE, [ieVersion, 0, 0]];
-  };
-  /**
-   * User agent: Opera (15+ only) browser
-   * @public
-   * @param {string} ua - user agent string
-   * @returns {Object} an Array as [boolean, Object] where boolean indicates if
-   * Opera browser is detected and Object is an Array holding the
-   * version [major, minor, pacth] or null if not available.
-   */
-  var _isOpera = function (ua) {
-    var isOpera = false;
-    var operaVersion = null;
-    var support = [isOpera, operaVersion];
-    // includes iOS opera detection
-    var pattern = /(opr|opios)/i;
-    if (pattern.test(ua)) {
-      isOpera = true;
-      pattern = /opr\/(\d+)\.(\d+)\.?(\d+)?/i;
-      var versionArray = ua.match(pattern);
-      if (!!versionArray) {
-        operaVersion = [
-          parseInt(versionArray[1], 10),
-          parseInt(versionArray[2], 10),
-          parseInt(versionArray[3] || 0, 10)
-        ];
-      }
-      support = [isOpera, operaVersion];
-    }
-    return support;
   };
   /**
    * Get plugin version from version property
@@ -351,15 +240,15 @@ var RadiantML = (function (win, doc, nav) {
     return false;
   };
   /**
-   * Feature: WebM with VP9 video and Opus audio
+   * Feature: WebM with VP9 video and Vorbis audio
    * @public
-   * @returns {boolean} has WebM VP9/Opus support in HTML5 video (or not)
+   * @returns {boolean} has WebM VP9/Vorbis support in HTML5 video (or not)
    */
-  RadiantML.prototype.webmVP9Opus = function () {
+  RadiantML.prototype.webmVP9Vorbis = function () {
     if (this.video5()) {
       return _canPlayType(
           'video',
-          'video/webm; codecs="vp9, opus"',
+          'video/webm; codecs="vp9, vorbis"',
           true,
           this
           );
@@ -403,15 +292,47 @@ var RadiantML = (function (win, doc, nav) {
     return !!this._audio.canPlayType;
   };
   /**
-   * Feature: M4A/AAC audio
+   * Feature: M4A/AAC-LC audio
    * @public
-   * @returns {boolean} has M4A/AAC audio support in HTML5 audio (or not)
+   * @returns {boolean} M4A/AAC (low complexity) support in HTML5 audio
    */
-  RadiantML.prototype.m4aAAC = function () {
+  RadiantML.prototype.m4aAACLC = function () {
     if (this.audio5()) {
       return _canPlayType(
           'audio',
           'audio/mp4; codecs="mp4a.40.2"',
+          true,
+          this
+          );
+    }
+    return false;
+  };
+  /**
+   * Feature: M4A/HE-AAC audio
+   * @public
+   * @returns {boolean} M4A/AAC (high efficiency) support in HTML5 audio
+   */
+  RadiantML.prototype.m4aHEAAC = function () {
+    if (this.audio5()) {
+      return _canPlayType(
+          'audio',
+          'audio/mp4; codecs="mp4a.40.5"',
+          true,
+          this
+          );
+    }
+    return false;
+  };
+  /**
+   * Feature: M4A/HE-AACv2 audio
+   * @public
+   * @returns {boolean} M4A/AAC (high efficiency v2) support in HTML5 audio
+   */
+  RadiantML.prototype.m4aHEAACv2 = function () {
+    if (this.audio5()) {
+      return _canPlayType(
+          'audio',
+          'audio/mp4; codecs="mp4a.40.29"',
           true,
           this
           );
@@ -700,7 +621,6 @@ var RadiantML = (function (win, doc, nav) {
   /*** streaming protocols detection ***/
   /**
    * Apple HTTP Live Streaming video support (.m3u8)
-   * Real world conditions (feature detection + user agent detection)
    * @public
    * @returns {boolean} has Apple HTTP Live Streaming video support (or not)
    */
@@ -708,26 +628,16 @@ var RadiantML = (function (win, doc, nav) {
     if (this.video5()) {
       // HLS video MIME type as per
       // https://tools.ietf.org/html/draft-pantos-http-live-streaming-14
-      var hlsVideoMimeType = _canPlayType('video',
+      return _canPlayType('video',
           'application/vnd.apple.mpegurl',
           false,
           this
           );
-      var ua = this.getUserAgent();
-      var isAndroid = _isAndroid(ua);
-      // Android before 4.0.0 just do not handle HLS well
-      if (isAndroid[0] && isAndroid[1][0] < 4) {
-        return false;
-      }
-      if (hlsVideoMimeType) {
-        return true;
-      }
     }
     return false;
   };
   /**
    * Apple HTTP Live Streaming audio support (.m3u)
-   * Real world conditions (feature detection + user agent detection)
    * @public
    * @returns {boolean} has Apple HTTP Live Streaming audio support (or not)
    */
@@ -735,61 +645,11 @@ var RadiantML = (function (win, doc, nav) {
     if (this.audio5()) {
       // HLS audio MIME type as per
       // https://tools.ietf.org/html/draft-pantos-http-live-streaming-14
-      var hlsAudioMimeType = _canPlayType('audio',
+      return _canPlayType('audio',
           'audio/mpegurl',
           false,
           this
           );
-      var ua = this.getUserAgent();
-      var isAndroid = _isAndroid(ua);
-      // Android before 4.0.0 just do not handle HLS well
-      if (isAndroid[0] && isAndroid[1][0] < 4) {
-        return false;
-      }
-      if (hlsAudioMimeType) {
-        return true;
-      }
-    }
-    return false;
-  };
-  /**
-   * MPEG-DASH DASH264 video support (.mpd)
-   * real world conditions (feature detection + user agent detection)
-   * @public
-   * @returns {boolean} has MPEG-DASH DASH264 video support (or not)
-   */
-  RadiantML.prototype.dash264 = function () {
-    if (this.video5()) {
-      var ua = this.getUserAgent();
-      // Opera only supports WebM Dash as of now
-      var isOpera = _isOpera(ua);
-      if (isOpera[0]) {
-        return false;
-      }
-      // MPEG-DASH is ok on Android 4.2 and above with Chrome 34+
-      var isAndroid = _isAndroid(ua);
-      var isChrome = _isChrome(ua);
-      if (isAndroid[0] && isAndroid[1][0] >= 4 && isAndroid[1][1] >= 2 &&
-          isChrome[0] && isChrome[1][0] >= 34) {
-        return true;
-      }
-      // Default should be ok for the rest
-      if (this.mse() && this.mp4H264AAC()) {
-        return true;
-      }
-    }
-    return false;
-  };
-  /**
-   * MPEG-DASH WebM Dash video support (.mpd)
-   * @public
-   * @returns {boolean} has MPEG-DASH WebM Dash video support (or not)
-   */
-  RadiantML.prototype.dashWebM = function () {
-    if (this.video5()) {
-      if (this.mse() && (this.webmVP9Opus() || this.webmVP8Vorbis())) {
-        return true;
-      }
     }
     return false;
   };
