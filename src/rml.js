@@ -1,5 +1,5 @@
 /**
- * Radiant MediaLyzer 1.2.2 | http://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 1.2.3 | http://www.radiantmedialyzer.net
  * Copyright (c) 2014-2015  Radiant Media Player | Arnaud Leyder EIRL
  * https://www.radiantmediaplayer.com/
  * MIT License http://www.radiantmedialyzer.net/license.html
@@ -9,7 +9,7 @@
  * RadiantML class definition
  * @class
  */
-var RadiantML = (function (win, doc, nav) {
+window.RadiantML = (function (win, doc, nav) {
   "use strict";
   /**
    * Creates an instance of RadiantML
@@ -17,14 +17,10 @@ var RadiantML = (function (win, doc, nav) {
    */
   function RadiantML() {
     this._userAgent = _getUserAgent();
-    this._plugins = _getPlugins();
-    this._mimeTypes = _getMimeTypes();
-    this._standalone = _getStandaloneMode();
     this._video = doc.createElement('video');
     this._audio = doc.createElement('audio');
     this._canvas = doc.createElement('canvas');
   }
-
   /**** private methods start here ****/
   /**
    * Obtain user agent string
@@ -33,36 +29,6 @@ var RadiantML = (function (win, doc, nav) {
    */
   var _getUserAgent = function () {
     return nav.userAgent || null;
-  };
-  /**
-   * Obtain user agent plugins list
-   * @private
-   * @returns {Object|null} PluginArray or null
-   */
-  var _getPlugins = function () {
-    if (!!nav.plugins && nav.plugins.length > 0) {
-      return nav.plugins;
-    }
-    return null;
-  };
-  /**
-   * Obtain user agent mime types list
-   * @private
-   * @returns {Object|null} MimeTypeArray or null
-   */
-  var _getMimeTypes = function () {
-    if (!!nav.mimeTypes && nav.mimeTypes.length > 0) {
-      return nav.mimeTypes;
-    }
-    return null;
-  };
-  /**
-   * Obtain user agent standalone mode (iOS only)
-   * @private
-   * @returns {boolean|null} is in standalone mode or null
-   */
-  var _getStandaloneMode = function () {
-    return nav.standalone || null;
   };
   /**
    * Can play type (MIME types) method for HTML5 media elements
@@ -83,76 +49,6 @@ var RadiantML = (function (win, doc, nav) {
     }
     return false;
   };
-  /**
-   * User agent: Internet Explorer browser
-   * @public
-   * @param {string} ua - user agent string
-   * @returns {Object} an Array as [boolean, Object] where boolean indicates
-   * if Internet Explorer browser is detected and Object is an Array holding the
-   * version [major, minor, pacth] or null if not available.
-   */
-  var _isIE = function (ua) {
-    var isIE = false;
-    var ieVersion = null;
-    var pattern = /(msie|trident)/i;
-    if (pattern.test(ua)) {
-      isIE = true;
-      pattern = /msie/i;
-      if (pattern.test(ua)) {
-        var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
-        if (re.exec(ua) !== null) {
-          ieVersion = parseFloat(RegExp.$1);
-        }
-      } else {
-        ieVersion = 11;
-      }
-
-    }
-    return [isIE, [ieVersion, 0, 0]];
-  };
-  /**
-   * Get plugin version from version property
-   * @private
-   * @param {string} version - the version string
-   * @returns {Object} Array with the version number [major, minor, patch]
-   */
-  var _parsePluginVersion = function (version) {
-    if (!!version) {
-      var versionArray = version.split('.');
-      if (versionArray[0] && versionArray[1]) {
-        return [
-          parseInt(versionArray[0], 10),
-          parseInt(versionArray[1], 10),
-          parseInt(versionArray[2] || 0, 10)
-        ];
-      }
-    }
-    return null;
-  };
-  /**
-   * Get plugin version from description property
-   * @private
-   * @param {string} description - the description string
-   * @returns {Object} Array with the version number [major, minor, patch]
-   */
-  var _parsePluginDescription = function (description) {
-    if (!!description) {
-      var matches = description.match(/[\d]+/g);
-      if (matches) {
-        if (matches.length >= 3) {
-          matches.length = 3;
-        }
-        if (matches[0] && matches[1]) {
-          return [
-            parseInt(matches[0], 10),
-            parseInt(matches[1], 10),
-            parseInt(matches[2] || 0, 10)
-          ];
-        }
-      }
-    }
-    return null;
-  };
 
   /**** public methods start here ****/
   /*** public getters ***/
@@ -163,30 +59,6 @@ var RadiantML = (function (win, doc, nav) {
    */
   RadiantML.prototype.getUserAgent = function () {
     return this._userAgent;
-  };
-  /**
-   * Getter getPlugins
-   * @public
-   * @returns {Object|null} PluginArray or null
-   */
-  RadiantML.prototype.getPlugins = function () {
-    return this._plugins;
-  };
-  /**
-   * Getter getMimeTypes
-   * @public
-   * @returns {Object|null} MimeTypeArray or null
-   */
-  RadiantML.prototype.getMimeTypes = function () {
-    return this._mimeTypes;
-  };
-  /**
-   * Getter getStandaloneMode
-   * @public
-   * @returns {boolean|null} is in standalone mode or null
-   */
-  RadiantML.prototype.getStandaloneMode = function () {
-    return this._standalone;
   };
 
   /*** feature detection ***/
@@ -490,23 +362,22 @@ var RadiantML = (function (win, doc, nav) {
     return !!webWorker;
   };
   /**
-   * Feature: Web Storage  API
+   * Feature: localStorage support
    * @public
-   * @returns {boolean} has Web Storage  API support (or not)
+   * @returns {boolean} has localStorage support (or not)
    */
-  RadiantML.prototype.webStorage = function () {
-    //try/catch to fix a bug in older versions of Firefox
-    try {
-      if (typeof win.localStorage !== 'undefined' &&
-          win['localStorage'] !== null &&
-          typeof win.sessionStorage !== 'undefined') {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      return false;
-    }
+  RadiantML.prototype.localStorage = function () {
+    var localStorage = win.localStorage;
+    return !!localStorage;
+  };
+  /**
+   * Feature: sessionStorage support
+   * @public
+   * @returns {boolean} has sessionStorage support (or not)
+   */
+  RadiantML.prototype.sessionStorage = function () {
+    var sessionStorage = win.sessionStorage;
+    return !!sessionStorage;
   };
   /**
    * Feature: canvas element support
@@ -565,57 +436,6 @@ var RadiantML = (function (win, doc, nav) {
       }
     }
     return false;
-  };
-
-  /*** Plugin detection ***/
-  /**
-   * Feature: Flash plugin support
-   * @public
-   * @returns {Object} an Array as [boolean, Object] where boolean indicates if flash is
-   * supported and Object is an Array holding the version [major, minor, pacth] or
-   * null if not available.
-   */
-  RadiantML.prototype.flash = function () {
-    var hasFlash = false;
-    var flashVersion = null;
-    var support = [hasFlash, flashVersion];
-    var ua = this.getUserAgent();
-    // IE 9, 10 with ActiveXObject (not tested on IE 8)
-    var ie = _isIE(ua);
-    if (ie[0] && ie[1][0] < 11) {
-      try {
-        var flash = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
-        hasFlash = true;
-        flashVersion = _parsePluginDescription(flash.GetVariable('$version'));
-        support = [hasFlash, flashVersion];
-      } catch (e) {
-        support = [hasFlash, flashVersion];
-      }
-    } else if (this._plugins) {
-      // check by plugin direct name first as explained
-      // on https://developer.mozilla.org/en-US/docs/Web/API/NavigatorPlugins.plugins
-      var flash = nav.plugins['Shockwave Flash'];
-      if (!!flash) {
-        hasFlash = true;
-        if (!!flash.version) {
-          flashVersion = _parsePluginVersion(flash.version);
-        } else if (!!flash.description) {
-          flashVersion = _parsePluginDescription(flash.description);
-        }
-        support = [hasFlash, flashVersion];
-      }
-    } else if (this._mimeTypes) {
-      // check by mimeTypes as a fallback
-      var flash = nav.mimeTypes['application/x-shockwave-flash'];
-      if (!!flash && flash.enabledPlugin) {
-        hasFlash = true;
-        if (!!flash.enabledPlugin.description) {
-          flashVersion = _parsePluginDescription(flash.enabledPlugin.description);
-        }
-        support = [hasFlash, flashVersion];
-      }
-    }
-    return support;
   };
 
   /*** streaming protocols detection ***/
