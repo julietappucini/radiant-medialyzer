@@ -1,5 +1,5 @@
 /**
- * Radiant MediaLyzer 1.2.3 | http://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 1.2.4 | http://www.radiantmedialyzer.net
  * Copyright (c) 2014-2015  Radiant Media Player | Arnaud Leyder EIRL
  * https://www.radiantmediaplayer.com/
  * MIT License http://www.radiantmedialyzer.net/license.html
@@ -20,6 +20,7 @@ window.RadiantML = (function (win, doc, nav) {
     this._video = doc.createElement('video');
     this._audio = doc.createElement('audio');
     this._canvas = doc.createElement('canvas');
+    this._version = '1.2.4';
   }
   /**** private methods start here ****/
   /**
@@ -44,7 +45,7 @@ window.RadiantML = (function (win, doc, nav) {
       testElement = context._audio;
     }
     if ((strict && testElement.canPlayType(mime) === 'probably') ||
-        (!strict && testElement.canPlayType(mime) !== '')) {
+            (!strict && testElement.canPlayType(mime) !== '')) {
       return true;
     }
     return false;
@@ -52,6 +53,14 @@ window.RadiantML = (function (win, doc, nav) {
 
   /**** public methods start here ****/
   /*** public getters ***/
+  /**
+   * Getter getVersion
+   * @public
+   * @returns {string} lib version
+   */
+  RadiantML.prototype.getVersion = function () {
+    return this._version;
+  };
   /**
    * Getter getUserAgent
    * @public
@@ -103,11 +112,11 @@ window.RadiantML = (function (win, doc, nav) {
   RadiantML.prototype.webmVP8Vorbis = function () {
     if (this.video5()) {
       return _canPlayType(
-          'video',
-          'video/webm; codecs="vp8, vorbis"',
-          true,
-          this
-          );
+              'video',
+              'video/webm; codecs="vp8, vorbis"',
+              true,
+              this
+              );
     }
     return false;
   };
@@ -119,11 +128,11 @@ window.RadiantML = (function (win, doc, nav) {
   RadiantML.prototype.webmVP9Vorbis = function () {
     if (this.video5()) {
       return _canPlayType(
-          'video',
-          'video/webm; codecs="vp9, vorbis"',
-          true,
-          this
-          );
+              'video',
+              'video/webm; codecs="vp9, vorbis"',
+              true,
+              this
+              );
     }
     return false;
   };
@@ -135,11 +144,11 @@ window.RadiantML = (function (win, doc, nav) {
   RadiantML.prototype.oggTheoraVorbis = function () {
     if (this.video5()) {
       return _canPlayType(
-          'video',
-          'video/ogg; codecs="theora, vorbis"',
-          true,
-          this
-          );
+              'video',
+              'video/ogg; codecs="theora, vorbis"',
+              true,
+              this
+              );
     }
     return false;
   };
@@ -150,9 +159,9 @@ window.RadiantML = (function (win, doc, nav) {
    */
   RadiantML.prototype.nativeFS = function () {
     var fs = doc.documentElement.requestFullscreen ||
-        doc.documentElement.mozRequestFullScreen ||
-        doc.documentElement.webkitRequestFullscreen ||
-        doc.documentElement.msRequestFullscreen;
+            doc.documentElement.mozRequestFullScreen ||
+            doc.documentElement.webkitRequestFullscreen ||
+            doc.documentElement.msRequestFullscreen;
     return !!fs;
   };
   /**
@@ -171,11 +180,11 @@ window.RadiantML = (function (win, doc, nav) {
   RadiantML.prototype.m4aAACLC = function () {
     if (this.audio5()) {
       return _canPlayType(
-          'audio',
-          'audio/mp4; codecs="mp4a.40.2"',
-          true,
-          this
-          );
+              'audio',
+              'audio/mp4; codecs="mp4a.40.2"',
+              true,
+              this
+              );
     }
     return false;
   };
@@ -187,11 +196,11 @@ window.RadiantML = (function (win, doc, nav) {
   RadiantML.prototype.m4aHEAAC = function () {
     if (this.audio5()) {
       return _canPlayType(
-          'audio',
-          'audio/mp4; codecs="mp4a.40.5"',
-          true,
-          this
-          );
+              'audio',
+              'audio/mp4; codecs="mp4a.40.5"',
+              true,
+              this
+              );
     }
     return false;
   };
@@ -203,11 +212,11 @@ window.RadiantML = (function (win, doc, nav) {
   RadiantML.prototype.m4aHEAACv2 = function () {
     if (this.audio5()) {
       return _canPlayType(
-          'audio',
-          'audio/mp4; codecs="mp4a.40.29"',
-          true,
-          this
-          );
+              'audio',
+              'audio/mp4; codecs="mp4a.40.29"',
+              true,
+              this
+              );
     }
     return false;
   };
@@ -219,11 +228,11 @@ window.RadiantML = (function (win, doc, nav) {
   RadiantML.prototype.mp3 = function () {
     if (this.audio5()) {
       return _canPlayType(
-          'audio',
-          'audio/mpeg',
-          false,
-          this
-          );
+              'audio',
+              'audio/mpeg',
+              false,
+              this
+              );
     }
     return false;
   };
@@ -235,11 +244,11 @@ window.RadiantML = (function (win, doc, nav) {
   RadiantML.prototype.oggVorbis = function () {
     if (this.audio5()) {
       return _canPlayType(
-          'audio',
-          'audio/ogg; codecs="vorbis"',
-          true,
-          this
-          );
+              'audio',
+              'audio/ogg; codecs="vorbis"',
+              true,
+              this
+              );
     }
     return false;
   };
@@ -251,11 +260,11 @@ window.RadiantML = (function (win, doc, nav) {
   RadiantML.prototype.webmOpus = function () {
     if (this.audio5()) {
       return _canPlayType(
-          'audio',
-          'audio/webm; codecs="opus"',
-          true,
-          this
-          );
+              'audio',
+              'audio/webm; codecs="opus"',
+              true,
+              this
+              );
     }
     return false;
   };
@@ -267,11 +276,11 @@ window.RadiantML = (function (win, doc, nav) {
   RadiantML.prototype.wavPCM = function () {
     if (this.audio5()) {
       return _canPlayType(
-          'audio',
-          'audio/wav',
-          false,
-          this
-          );
+              'audio',
+              'audio/wav',
+              false,
+              this
+              );
     }
     return false;
   };
@@ -282,9 +291,9 @@ window.RadiantML = (function (win, doc, nav) {
    */
   RadiantML.prototype.webAudio = function () {
     var audioContext = win.AudioContext ||
-        win.webkitAudioContext ||
-        win.mozAudioContext ||
-        win.msAudioContext;
+            win.webkitAudioContext ||
+            win.mozAudioContext ||
+            win.msAudioContext;
     return !!audioContext;
   };
   /**
@@ -303,8 +312,8 @@ window.RadiantML = (function (win, doc, nav) {
    */
   RadiantML.prototype.eme = function () {
     var eme = "MediaKeys" in win ||
-        "WebKitMediaKeys" in win ||
-        "MSMediaKeys" in win;
+            "WebKitMediaKeys" in win ||
+            "MSMediaKeys" in win;
     return !!eme;
   };
   /**
@@ -314,9 +323,9 @@ window.RadiantML = (function (win, doc, nav) {
    */
   RadiantML.prototype.getUserMedia = function () {
     var getUserMedia = nav.getUserMedia ||
-        nav.webkitGetUserMedia ||
-        nav.mozGetUserMedia ||
-        nav.msGetUserMedia;
+            nav.webkitGetUserMedia ||
+            nav.mozGetUserMedia ||
+            nav.msGetUserMedia;
     return !!getUserMedia;
   };
   /**
@@ -326,9 +335,9 @@ window.RadiantML = (function (win, doc, nav) {
    */
   RadiantML.prototype.rtcPeerConnection = function () {
     var RTCPeerConnection = win.RTCPeerConnection ||
-        win.mozRTCPeerConnection ||
-        win.webkitRTCPeerConnection ||
-        win.msRTCPeerConnection;
+            win.mozRTCPeerConnection ||
+            win.webkitRTCPeerConnection ||
+            win.msRTCPeerConnection;
     return !!RTCPeerConnection;
   };
   /**
@@ -338,9 +347,9 @@ window.RadiantML = (function (win, doc, nav) {
    */
   RadiantML.prototype.rtcSessionDescription = function () {
     var RTCSessionDescription = win.RTCSessionDescription ||
-        win.mozRTCSessionDescription ||
-        win.webkitRTCSessionDescription ||
-        win.msRTCSessionDescription;
+            win.mozRTCSessionDescription ||
+            win.webkitRTCSessionDescription ||
+            win.msRTCSessionDescription;
     return !!RTCSessionDescription;
   };
   /**
@@ -449,10 +458,10 @@ window.RadiantML = (function (win, doc, nav) {
       // HLS video MIME type as per
       // https://tools.ietf.org/html/draft-pantos-http-live-streaming-14
       return _canPlayType('video',
-          'application/vnd.apple.mpegurl',
-          false,
-          this
-          );
+              'application/vnd.apple.mpegurl',
+              false,
+              this
+              );
     }
     return false;
   };
@@ -466,10 +475,10 @@ window.RadiantML = (function (win, doc, nav) {
       // HLS audio MIME type as per
       // https://tools.ietf.org/html/draft-pantos-http-live-streaming-14
       return _canPlayType('audio',
-          'audio/mpegurl',
-          false,
-          this
-          );
+              'audio/mpegurl',
+              false,
+              this
+              );
     }
     return false;
   };

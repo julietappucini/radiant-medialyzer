@@ -9,6 +9,15 @@ describe("Radiant MediaLyzer unit test suite for Google Chrome 45 on Windows 10"
     }
     expect(res).toBe(true);
   });
+  // lib version
+  it("RML version", function () {
+    var version = rml.getVersion();
+    var res = false;
+    if (typeof version === 'string') {
+      res = true;
+    }
+    expect(res).toBe(true);
+  });
   // video
   it("HTML5 video tag support", function () {
     expect(rml.video5()).toBe(true);

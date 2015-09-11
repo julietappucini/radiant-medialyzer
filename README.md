@@ -41,7 +41,7 @@ Checkout sources or download ZIP package from GitHub
 
 #### jsDelivr
 
-```<script src="//cdn.jsdelivr.net/radiant-medialyzer/1.2.3/rml.min.js"></script>```
+```<script src="//cdn.jsdelivr.net/radiant-medialyzer/1.2.4/rml.min.js"></script>```
 
 ## Quick start guide
 
