@@ -68,7 +68,7 @@ var mse = rml.mse();
 var mp4H264AAC = rml.mp4H264AAC('high40');
 var m4aHEAACv2 = rml.m4aHEAACv2();
 if (mse && mp4H264AAC && m4aHEAACv2) {
-    // we could have DASH264 support do something
+    // DASH264 support do something (assuming you are using dash.js or equivalent)
 } else {
     // No go for DASH264 do something different
 }
