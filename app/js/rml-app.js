@@ -5,6 +5,13 @@ require('core-js/es6');
 
 var _rmlClass = require('../../src/rml-class');
 
+/**
+ * Radiant MediaLyzer 2.0.0 | http://www.radiantmedialyzer.net
+ * @license Copyright (c) 2016  Arnaud Leyder EIRL
+ * MIT License http://www.radiantmedialyzer.net/license.html
+ */
+
+
 (function (window, document) {
 
   'use strict';
