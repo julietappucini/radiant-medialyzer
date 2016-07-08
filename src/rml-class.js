@@ -1,5 +1,5 @@
 /**
- * Radiant MediaLyzer 2.0.2 | http://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.0.3 | http://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
  * MIT License http://www.radiantmedialyzer.net/license.html
  */
@@ -12,7 +12,7 @@ export class RadiantML {
     this.testAudio = document.createElement('audio');
     this.testCanvas = document.createElement('canvas');
     this.body = document.body || document.getElementsByTagName('body')[0];
-    this.version = '2.0.2';
+    this.version = '2.0.3';
   }
 
   // get Radiant MediaLyzer version
@@ -171,7 +171,7 @@ export class RadiantML {
   threeGPP() {
     if (this.video5()) {
       let mimeType = 'video/3gpp; codecs="mp4v.20.8, mp4a.40.2"';
-      return this.canPlayType('audio', mimeType, true);
+      return this.canPlayType('video', mimeType, true);
     }
     return false;
   }
@@ -182,7 +182,7 @@ export class RadiantML {
       // HLS video MIME type as per
       // https://tools.ietf.org/html/draft-pantos-http-live-streaming-14
       let mimeType = 'application/vnd.apple.mpegurl';
-      return this.canPlayType('audio', mimeType, true);
+      return this.canPlayType('video', mimeType, false);
     }
     return false;
   }
@@ -296,7 +296,7 @@ export class RadiantML {
       // HLS video MIME type as per
       // https://tools.ietf.org/html/draft-pantos-http-live-streaming-14
       let mimeType = 'audio/mpegurl';
-      return this.canPlayType('audio', mimeType, true);
+      return this.canPlayType('audio', mimeType, false);
     }
     return false;
   }
