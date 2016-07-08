@@ -14,15 +14,15 @@ imported into your project to start query to Radiant MediaLyzer API. It can be c
 to ES5 JavaScript with [Babel](https://babeljs.io/) and [Browserify](http://browserify.org/#install). 
 See the app folder for an example. Jasmine unit test are provided.
 
-## Install
-
-#### NPM
-
-`npm install radiant-medialyzer`
+## Get the latest package
 
 #### GitHub
 
 [Download latest release](https://github.com/arnaudleyder/radiant-medialyzer/releases)
+
+#### NPM
+
+`npm install radiant-medialyzer`
 
 #### For developers
 
@@ -33,9 +33,12 @@ You must have the following cli (command line) tools installed:
 - browserify
 - watchify (optional but will really make your life easier)
 
-Once done to compile do: grunt
+Once you have retrieved the package go to the root of the project 
+(on npm that would be in node_modules/radiant-medialyzer). Then type `npm install` to install the devDependencies.
 
-To develop (requires watchify) do: grunt concurrent
+Once done to compile do: `grunt`
+
+To develop (requires watchify) do: `grunt concurrent`
 
 If you modify the src/rml-class.js file make sure to run jshint and tests at test/SpecRunner.html (add your tests at test/spec/rml-spec-es6.js)
 
