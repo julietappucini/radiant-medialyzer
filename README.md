@@ -53,14 +53,14 @@ Include Radiant MediaLyzer JavaScript file:
 import 'core-js/es6';
 // We import our RadiantML class
 import {RadiantML} from '../../src/rml-class';
-((window, document) => {
+(() => {
   'use strict';
   // We create an instance of the RadiantML class
   const rml = new RadiantML();
   // We start making calls to the API
   console.log(rml.video5());
   console.log(rml.mp4H264AAC('main', 4.0));
-})(window, document);
+})();
 ```
 
 ## Complete documentation
