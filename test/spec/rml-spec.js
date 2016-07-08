@@ -369,20 +369,20 @@ var RadiantML = exports.RadiantML = function () {
     return false;
   };
 
-  // test for native fullscreen support on targeted device
-
-
-  RadiantML.prototype.nativeFS = function nativeFS() {
-    var fs = document.documentElement.requestFullscreen || document.documentElement.mozRequestFullScreen || document.documentElement.webkitRequestFullscreen || document.documentElement.msRequestFullscreen;
-    return !!fs;
-  };
-
   // test for Web Audio API support
 
 
   RadiantML.prototype.webAudio = function webAudio() {
     var audioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.msAudioContext;
     return !!audioContext;
+  };
+
+  // test for native fullscreen support on targeted device
+
+
+  RadiantML.prototype.nativeFS = function nativeFS() {
+    var fs = document.documentElement.requestFullscreen || document.documentElement.mozRequestFullScreen || document.documentElement.webkitRequestFullscreen || document.documentElement.msRequestFullscreen;
+    return !!fs;
   };
 
   // test for Web Worker support

@@ -22,7 +22,7 @@ See the app folder for an example. Jasmine unit test are provided.
 
 #### GitHub
 
-[Download latest](https://github.com/arnaudleyder/radiant-medialyzer/releases)
+[Download latest release](https://github.com/arnaudleyder/radiant-medialyzer/releases)
 
 #### For developers
 
