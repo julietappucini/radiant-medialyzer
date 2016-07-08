@@ -8,7 +8,7 @@ Object.defineProperty(exports, "__esModule", {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Radiant MediaLyzer 2.0.0 | http://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.0.2 | http://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
  * MIT License http://www.radiantmedialyzer.net/license.html
  */
@@ -25,7 +25,7 @@ var RadiantML = exports.RadiantML = function () {
     this.testAudio = document.createElement('audio');
     this.testCanvas = document.createElement('canvas');
     this.body = document.body || document.getElementsByTagName('body')[0];
-    this.version = '2.0.0';
+    this.version = '2.0.2';
   }
 
   // get Radiant MediaLyzer version
@@ -662,7 +662,7 @@ var _rmlClass = require('../../src/rml-class');
     });
   });
 })(); /**
-       * Radiant MediaLyzer 2.0.0 | http://www.radiantmedialyzer.net
+       * Radiant MediaLyzer 2.0.2 | http://www.radiantmedialyzer.net
        * @license Copyright (c) 2016  Arnaud Leyder EIRL
        * MIT License http://www.radiantmedialyzer.net/license.html
        */

@@ -1,6 +1,6 @@
 {
   "name": "radiant-medialyzer",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "Arnaud Leyder <arnaud@radiantmediaplayer.com>",
   "description": "An open source JavaScript library to detect media-related features",
   "repository": {

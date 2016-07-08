@@ -1,5 +1,5 @@
 /**
- * Radiant MediaLyzer 2.0.0 | http://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.0.2 | http://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
  * MIT License http://www.radiantmedialyzer.net/license.html
  */
@@ -175,7 +175,7 @@ import {RadiantML} from '../../src/rml-class';
     });
   } else {
     let drmItems = document.getElementsByClassName('drm-items');
-    for (let i of drmItems) {
+    for (let i = 0, len = drmItems.length; i < len; i++) {
       if (drmItems[i]) {
         drmItems[i].style.display = 'none';
       }
@@ -351,7 +351,7 @@ import {RadiantML} from '../../src/rml-class';
     typeof version.minor === 'number' && typeof version.release === 'number') {
     let major = version.major;
     let minor = version.minor;
-    let release = version.release; 
+    let release = version.release;
     flash.textContent = 'Flash is available';
     flashVersion.textContent = 'Detected Flash version: ' + major + '.' + minor + '.' + release;
   } else {

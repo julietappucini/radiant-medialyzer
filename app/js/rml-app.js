@@ -6,7 +6,7 @@ require('core-js/es6');
 var _rmlClass = require('../../src/rml-class');
 
 /**
- * Radiant MediaLyzer 2.0.0 | http://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.0.2 | http://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
  * MIT License http://www.radiantmedialyzer.net/license.html
  */
@@ -179,30 +179,9 @@ var _rmlClass = require('../../src/rml-class');
     });
   } else {
     var drmItems = document.getElementsByClassName('drm-items');
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-      for (var _iterator = drmItems[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var i = _step.value;
-
-        if (drmItems[i]) {
-          drmItems[i].style.display = 'none';
-        }
-      }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator.return) {
-          _iterator.return();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
+    for (var i = 0, len = drmItems.length; i < len; i++) {
+      if (drmItems[i]) {
+        drmItems[i].style.display = 'none';
       }
     }
   }
@@ -5583,7 +5562,7 @@ Object.defineProperty(exports, "__esModule", {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Radiant MediaLyzer 2.0.0 | http://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.0.2 | http://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
  * MIT License http://www.radiantmedialyzer.net/license.html
  */
@@ -5600,7 +5579,7 @@ var RadiantML = exports.RadiantML = function () {
     this.testAudio = document.createElement('audio');
     this.testCanvas = document.createElement('canvas');
     this.body = document.body || document.getElementsByTagName('body')[0];
-    this.version = '2.0.0';
+    this.version = '2.0.2';
   }
 
   // get Radiant MediaLyzer version
