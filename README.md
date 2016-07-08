@@ -1,4 +1,4 @@
-# Radiant MediaLyzer
+# Radiant MediaLyzer 2
 Home Page: [http://www.radiantmedialyzer.net](http://www.radiantmedialyzer.net)
 
 Radiant MediaLyzer is a JavaScript API to detect media features for web-based
@@ -6,75 +6,64 @@ environnements. It includes feature detection for Media Source Extensions,
 Apple HLS, common video/audio codecs, HTML5 media elements, Web Audio API and more.
 
 Radiant MediaLyzer is an open source project released under
-[MIT license](http://www.radiantmedialyzer.net/license.html)
-and sponsored by [Radiant Media Player](https://www.radiantmediaplayer.com) an 
-HTML5-first video player with MPEG-DASH, HLS & Wowza support, HTML5 video ads and 
-an advanced Flash fallback.
+[MIT license](http://www.radiantmedialyzer.net/license.html). Parts of it are used in production 
+with [Radiant Media Player](https://www.radiantmediaplayer.com).
 
-Included features:
-* Media features detection for over 30 media related features
-* Built with vanilla JavaScript (no dependency)
-* Jasmine unit tested and JSHint compliant
-* Works on most devices of the current market from mobile phones to TVs
-* Error resilience
-* Complete [documentation](http://www.radiantmedialyzer.net/documentation.html)
-with JSDoc 3 commented sources
-* Available on jsDelivr CDN or self-hosted
-* Available on bower: `bower install radiant-medialyzer`
-* Pick the whole library or browse the source code to get the function you need
-* Lightweight: only 4 kB minified
+Radiant MediaLyzer is provided as an ES2015 JavaScript class. This class would need to be 
+imported into your project to start query to Radiant MediaLyzer API. It can be compiled 
+to ES5 JavaScript with [Babel](https://babeljs.io/) and [Browserify](http://browserify.org/#install). 
+See the app folder for an example. Jasmine unit test are provided.
+
+## Install
+
+#### NPM
+
+`npm install radiant-medialyzer`
+
+#### GitHub
+
+[Download latest](https://github.com/arnaudleyder/radiant-medialyzer/releases)
+
+#### For developers
+
+You must have the following cli (command line) tools installed:
+
+- grunt
+- jshint
+- browserify
+- watchify (optional but will really make your life easier)
+
+Once done to compile do: grunt
+
+To develop (requires watchify) do: grunt concurrent
+
+If you modify the src/rml-class.js file make sure to run jshint and tests at test/SpecRunner.html (add your tests at test/spec/rml-spec-es6.js)
+
+Contributions are welcome.
+
+## Quick start guide
+
+Include Radiant MediaLyzer JavaScript file:
+
+```
+// This is required for compilation to ES5
+import 'core-js/es6';
+// We import our RadiantML class
+import {RadiantML} from '../../src/rml-class';
+((window, document) => {
+  'use strict';
+  // We create an instance of the RadiantML class
+  const rml = new RadiantML();
+  // We start making calls to the API
+  console.log(rml.video5());
+  console.log(rml.mp4H264AAC('main', 4.0));
+})(window, document);
+```
 
 ## Complete documentation
 
 [http://www.radiantmedialyzer.net/documentation.html]
 (http://www.radiantmedialyzer.net/documentation.html)
 
-## Install
-
-#### Bower
-
-`bower install radiant-medialyzer`
-
-#### GitHub
-
-Checkout sources or download ZIP package from GitHub
-
-#### jsDelivr
-
-```<script src="//cdn.jsdelivr.net/radiant-medialyzer/1.2.4/rml.min.js"></script>```
-
-## Quick start guide
-
-Include Radiant MediaLyzer JavaScript file:
-
-```<script src="js/rml.min.js"></script>```
-
-Create a new instance:
-
-```javascript
-var rml = new RadiantML();
-```
-Start making calls to the API:
-
-```javascript
-rml.mp4H264AAC();
-rml.mse();
-rml.getUserMedia();
-```
-Do something with the result:
-
-```javascript
-var mse = rml.mse();
-var mp4H264AAC = rml.mp4H264AAC('high40');
-var m4aHEAACv2 = rml.m4aHEAACv2();
-if (mse && mp4H264AAC && m4aHEAACv2) {
-    // DASH264 support do something (assuming you are using dash.js or equivalent)
-} else {
-    // No go for DASH264 do something different
-}
-```
-Done! :bowtie:
-
-## Contributors
-
-Thanks to @jcready for various code optimization
+## Test your device media capabilities 
+Go to [http://www.radiantmedialyzer.net](http://www.radiantmedialyzer.net) and see what is green!

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <style>
+      code{
+        background-color: @accent;
+        color: @white;
+        font-size: 100%;
+        padding: 4px 8px;
+        font-size: 12px;
+      }
+      code.supported {
+        background-color: #E8F5E9;
+        color: #4CAF50;
+        white-space:nowrap;
+      }
+      code.not-supported {
+        background-color: #FFEBEE;
+        color: #F44336;
+        white-space:nowrap;
+      }
+      .text-support {
+        display: none;
+      }
+      @media (min-width:370px) {
+        .text-support {
+          display: inline;  
+          margin-left: 5px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2>Media features</h2>
+          <hr class="margin-bottom-0">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <h3>HTML5 Video</h3>
+          <h4>Basic features</h4>
+          <ul class="list-group">
+            <li class="list-group-item">Video tag <span id="video"></span></li>
+            <li class="list-group-item">autoplay attribute <span id="autoplay"></span></li>
+            <li class="list-group-item">playbackRate attribute <span id="playbackRate"></span></li>
+            <li class="list-group-item">loop attribute <span id="loop"></span></li>
+            <li class="list-group-item">muted attribute <span id="muted"></span></li>
+          </ul>
+
+          <h4>H.264 video in .mp4</h4>
+          <h5>Profile</h5>
+          <ul class="list-group">
+            <li class="list-group-item">Baseline 3.0 <span id="baseline"></span></li>
+            <li class="list-group-item">Main 3.0 <span id="main"></span></li>
+            <li class="list-group-item">High 3.0 <span id="high"></span></li>
+          </ul>
+          <h5>Level</h5>
+          <ul class="list-group">
+            <li class="list-group-item">Main 4.0 <span id="main40"></span></li>
+            <li class="list-group-item">Main 5.0 <span id="main50"></span></li>
+            <li class="list-group-item">Main 5.1 <span id="main51"></span></li>
+            <li class="list-group-item">Main 5.2 <span id="main52"></span></li>
+          </ul>
+
+          <h4>Apple HLS (.m3u8 playlist and .ts with H.264/AAC video)</h4>
+          <ul class="list-group">
+            <li class="list-group-item">HLS <span id="hls"></span></li>
+          </ul>
+
+          <h4>VP8/VP9 in .webm</h4>
+          <ul class="list-group">
+            <li class="list-group-item">VP8 <span id="vp8-webm"></span></li>
+            <li class="list-group-item">VP9 <span id="vp9-webm"></span></li>
+          </ul>
+
+          <h4>Theora in .ogg</h4>
+          <ul class="list-group">
+            <li class="list-group-item">Theora <span id="theora-ogg"></span></li>
+          </ul>
+
+          <h4>MPEG-4 Visual Simple Profile Level 0 in .3gpp</h4>
+          <ul class="list-group">
+            <li class="list-group-item">MPEG-4 Visual <span id="3gpp"></span></li>
+          </ul>
+        </div>
+        <div class="col-sm-6">
+          <h3>HTML5 Audio</h3>
+          <h4>Basic features</h4>
+          <ul class="list-group">
+            <li class="list-group-item">HTML5 audio <span id="audio"></span></li>
+          </ul>
+
+          <h4>AAC in .m4a</h4>
+          <ul class="list-group">
+            <li class="list-group-item">AAC-LC <span id="aac-lc"></span></li>
+            <li class="list-group-item">HE-AAC <span id="he-aac"></span></li>
+            <li class="list-group-item">HE-AACv2 <span id="he-aacv2"></span></li>
+          </ul>
+
+          <h4>Apple HLS (.m3u playlist and .aac with AAC audio)</h4>
+          <ul class="list-group">
+            <li class="list-group-item">HLS <span id="hls-audio"></span></li>
+          </ul>
+
+          <h4>AC3 in .m4a</h4>
+          <ul class="list-group">
+            <li class="list-group-item">AC3 <span id="ac3"></span></li>
+          </ul>
+
+          <h4>MPEG in .mp3</h4>
+          <ul class="list-group">
+            <li class="list-group-item">MP3 <span id="mp3"></span></li>
+          </ul>
+
+          <h4>Vorbis/Opus in .webm</h4>
+          <ul class="list-group">
+            <li class="list-group-item">Vorbis in .webm <span id="webm-vorbis"></span></li>
+            <li class="list-group-item">Opus in .webm <span id="webm-opus"></span></li>
+          </ul>
+
+          <h4>Vorbis/Opus/FLAC in .ogg</h4>
+          <ul class="list-group">
+            <li class="list-group-item">Vorbis in .ogg <span id="ogg-vorbis"></span></li>
+            <li class="list-group-item">Opus in .ogg <span id="ogg-opus"></span></li>
+            <li class="list-group-item">FLAC in .ogg <span id="ogg-flac"></span></li>
+          </ul>
+
+          <h4>PCM in .wav</h4>
+          <ul class="list-group">
+            <li class="list-group-item">WAVE <span id="wav"></span></li>
+          </ul>
+
+          <h4>WebAudio API</h4>
+          <ul class="list-group">
+            <li class="list-group-item">Web Audio API <span id="web-audio"></span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row li-short">
+        <div class="col-sm-6">
+          <h3>Media Source Extensions &amp; DRM</h3>
+          <ul class="list-group">
+            <li class="list-group-item">Media Source Extensions <span id="mse"></span></li>
+            <li class="list-group-item">Encrypted Media Extensions <span id="eme"></span></li>
+            <li class="list-group-item">requestMediaKeySystemAccess <span id="rmksa"></span></li>
+            <li class="list-group-item drm-items">Google Widevine CDM <span id="widevine"></span></li>
+            <li class="list-group-item drm-items">Microsoft PlayReady CDM <span id="playready"></span></li>
+            <li class="list-group-item drm-items">Adobe Primetime CDM <span id="primetime"></span></li>
+            <li class="list-group-item drm-items">W3C ClearKey CDM <span id="clearkey"></span></li>
+          </ul>
+        </div>
+        <div class="col-sm-6">
+          <h3>Canvas</h3>
+          <ul class="list-group">
+            <li class="list-group-item">Canvas tag <span id="canvas"></span></li>
+            <li class="list-group-item">Canvas text API <span id="canvas-text"></span></li>
+            <li class="list-group-item">Canvas blending <span id="canvas-blending"></span></li>
+            <li class="list-group-item">Canvas WebGL <span id="canvas-webgl"></span></li>
+          </ul>
+          <h3>Web Workers</h3>
+          <ul class="list-group">
+            <li class="list-group-item">Worker API <span id="web-workers"></span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <hr>
+          <h2>Device features</h2>
+          <hr class="margin-bottom-0">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <h3>User agent string</h3>
+          <ul class="list-group">
+            <li class="list-group-item" id="ua"></li>
+          </ul>
+          <h3>Network</h3>
+          <ul class="list-group">
+            <li class="list-group-item">Online status: <span id="online"></span></li>
+            <li class="list-group-item">Current URL: <span id="current-url"></span></li>
+            <li class="list-group-item">Protocol: <span id="protocol"></span></li>
+          </ul>
+          <h3>Native Fullscreen</h3>
+          <ul class="list-group">
+            <li class="list-group-item" id="fullscreen"></li>
+          </ul>
+          <h3>Viewport</h3>
+          <ul class="list-group">
+            <li class="list-group-item">Viewport width: <span id="viewport-width"></span></li>
+            <li class="list-group-item">Viewport height: <span id="viewport-height"></span></li>
+          </ul>
+          <h3>Flash support (using swfobject.js)</h3>
+          <ul class="list-group">
+            <li class="list-group-item" id="flash"></li>
+            <li class="list-group-item" id="flash-version"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+    <script src="js/rml-app.js"></script>
+  </body>
+</html>
