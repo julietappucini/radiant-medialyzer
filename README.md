@@ -34,11 +34,11 @@ You must have the following cli (command line) tools installed:
 - watchify (optional but will really make your life easier)
 
 Once you have retrieved the package go to the root of the project 
-(on npm that would be in node_modules/radiant-medialyzer). Then type `npm install` to install the devDependencies.
+(with install from npm that would be in node_modules/radiant-medialyzer). Then type `npm install` to install the devDependencies.
 
-Once done to compile do: `grunt`
+Once done to compile type: `grunt`
 
-To develop (requires watchify) do: `grunt concurrent`
+To develop (requires watchify) type: `grunt concurrent`
 
 If you modify the src/rml-class.js file make sure to run jshint and tests at test/SpecRunner.html (add your tests at test/spec/rml-spec-es6.js)
 
