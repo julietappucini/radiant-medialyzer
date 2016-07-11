@@ -8,7 +8,7 @@ Object.defineProperty(exports, "__esModule", {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Radiant MediaLyzer 2.1.1 | https://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.1.2 | https://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
  * MIT License https://www.radiantmedialyzer.net/license.html
  */
@@ -25,7 +25,7 @@ var RadiantML = exports.RadiantML = function () {
     this.testAudio = document.createElement('audio');
     this.testCanvas = document.createElement('canvas');
     this.body = document.body || document.getElementsByTagName('body')[0];
-    this.version = '2.1.1';
+    this.version = '2.1.2';
   }
 
   // get Radiant MediaLyzer version
@@ -211,12 +211,12 @@ var RadiantML = exports.RadiantML = function () {
     return false;
   };
 
-  // test for Dalaa video with Opus audio
+  // test for Daala video with Opus audio
 
 
-  RadiantML.prototype.oggDalaaOpus = function oggDalaaOpus() {
+  RadiantML.prototype.oggDaalaOpus = function oggDaalaOpus() {
     if (this.video5()) {
-      var mimeType = 'video/ogg; codecs="dalaa, opus"';
+      var mimeType = 'video/ogg; codecs="daala, opus"';
       return this.canPlayType('video', mimeType, true);
     }
     return false;
@@ -645,8 +645,8 @@ var _rmlClass = require('../../src/rml-class');
     it("webmVP9Opus", function () {
       expect(rml.webmVP9Opus()).toBe(true);
     });
-    it("oggDalaaOpus", function () {
-      expect(rml.oggDalaaOpus()).toBe(false);
+    it("oggDaalaOpus", function () {
+      expect(rml.oggDaalaOpus()).toBe(false);
     });
     it("oggTheoraVorbis", function () {
       expect(rml.oggTheoraVorbis()).toBe(true);
@@ -732,7 +732,7 @@ var _rmlClass = require('../../src/rml-class');
     });
   });
 })(); /**
-       * Radiant MediaLyzer 2.1.1 | https://www.radiantmedialyzer.net
+       * Radiant MediaLyzer 2.1.2 | https://www.radiantmedialyzer.net
        * @license Copyright (c) 2016  Arnaud Leyder EIRL
        * MIT License https://www.radiantmedialyzer.net/license.html
        */

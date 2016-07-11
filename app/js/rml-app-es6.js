@@ -1,5 +1,5 @@
 /**
- * Radiant MediaLyzer 2.1.1 | https://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.1.2 | https://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
  * MIT License https://www.radiantmedialyzer.net/license.html
  */
@@ -95,7 +95,7 @@ import {RadiantML} from '../../src/rml-class';
   let vp8VorbisWebMSpan = document.getElementById('vp8-vorbis-webm');
   let vp9VorbisWebMSpan = document.getElementById('vp9-vorbis-webm');
   let vp9OpusWebMSpan = document.getElementById('vp9-opus-webm');
-  let dalaaOpusSpan = document.getElementById('dalaa-opus-ogg');
+  let daalaOpusSpan = document.getElementById('daala-opus-ogg');
   let theoraVorbisSpan = document.getElementById('theora-vorbis-ogg');
   let diracVorbisSpan = document.getElementById('dirac-vorbis-ogg');
   let threeGPPSpan = document.getElementById('3gpp');
@@ -117,10 +117,10 @@ import {RadiantML} from '../../src/rml-class';
   } else {
     vp9OpusWebMSpan.innerHTML = notSupportedHTML;
   }
-  if (rml.oggDalaaOpus()) {
-    dalaaOpusSpan.innerHTML = supportedHTML;
+  if (rml.oggDaalaOpus()) {
+    daalaOpusSpan.innerHTML = supportedHTML;
   } else {
-    dalaaOpusSpan.innerHTML = notSupportedHTML;
+    daalaOpusSpan.innerHTML = notSupportedHTML;
   }
   if (rml.oggTheoraVorbis()) {
     theoraVorbisSpan.innerHTML = supportedHTML;

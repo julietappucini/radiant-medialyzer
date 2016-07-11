@@ -1,5 +1,5 @@
 /**
- * Radiant MediaLyzer 2.1.1 | https://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.1.2 | https://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
  * MIT License https://www.radiantmedialyzer.net/license.html
  */
@@ -98,8 +98,8 @@ import {RadiantML} from '../../src/rml-class';
     it("webmVP9Opus", () => {
       expect(rml.webmVP9Opus()).toBe(true);
     });
-    it("oggDalaaOpus", () => {
-      expect(rml.oggDalaaOpus()).toBe(false);
+    it("oggDaalaOpus", () => {
+      expect(rml.oggDaalaOpus()).toBe(false);
     });
     it("oggTheoraVorbis", () => {
       expect(rml.oggTheoraVorbis()).toBe(true);

@@ -1,5 +1,5 @@
 /**
- * Radiant MediaLyzer 2.1.1 | https://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.1.2 | https://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
  * MIT License https://www.radiantmedialyzer.net/license.html
  */
@@ -12,7 +12,7 @@ export class RadiantML {
     this.testAudio = document.createElement('audio');
     this.testCanvas = document.createElement('canvas');
     this.body = document.body || document.getElementsByTagName('body')[0];
-    this.version = '2.1.1';
+    this.version = '2.1.2';
   }
 
   // get Radiant MediaLyzer version
@@ -166,10 +166,10 @@ export class RadiantML {
     return false;
   }
 
-  // test for Dalaa video with Opus audio
-  oggDalaaOpus() {
+  // test for Daala video with Opus audio
+  oggDaalaOpus() {
     if (this.video5()) {
-      let mimeType = 'video/ogg; codecs="dalaa, opus"';
+      let mimeType = 'video/ogg; codecs="daala, opus"';
       return this.canPlayType('video', mimeType, true);
     }
     return false;

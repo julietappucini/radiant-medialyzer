@@ -6,7 +6,7 @@ require('core-js/es6');
 var _rmlClass = require('../../src/rml-class');
 
 /**
- * Radiant MediaLyzer 2.1.1 | https://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.1.2 | https://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
  * MIT License https://www.radiantmedialyzer.net/license.html
  */
@@ -99,7 +99,7 @@ var _rmlClass = require('../../src/rml-class');
   var vp8VorbisWebMSpan = document.getElementById('vp8-vorbis-webm');
   var vp9VorbisWebMSpan = document.getElementById('vp9-vorbis-webm');
   var vp9OpusWebMSpan = document.getElementById('vp9-opus-webm');
-  var dalaaOpusSpan = document.getElementById('dalaa-opus-ogg');
+  var daalaOpusSpan = document.getElementById('daala-opus-ogg');
   var theoraVorbisSpan = document.getElementById('theora-vorbis-ogg');
   var diracVorbisSpan = document.getElementById('dirac-vorbis-ogg');
   var threeGPPSpan = document.getElementById('3gpp');
@@ -121,10 +121,10 @@ var _rmlClass = require('../../src/rml-class');
   } else {
     vp9OpusWebMSpan.innerHTML = notSupportedHTML;
   }
-  if (rml.oggDalaaOpus()) {
-    dalaaOpusSpan.innerHTML = supportedHTML;
+  if (rml.oggDaalaOpus()) {
+    daalaOpusSpan.innerHTML = supportedHTML;
   } else {
-    dalaaOpusSpan.innerHTML = notSupportedHTML;
+    daalaOpusSpan.innerHTML = notSupportedHTML;
   }
   if (rml.oggTheoraVorbis()) {
     theoraVorbisSpan.innerHTML = supportedHTML;
@@ -5593,7 +5593,7 @@ Object.defineProperty(exports, "__esModule", {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Radiant MediaLyzer 2.1.1 | https://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.1.2 | https://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
  * MIT License https://www.radiantmedialyzer.net/license.html
  */
@@ -5610,7 +5610,7 @@ var RadiantML = exports.RadiantML = function () {
     this.testAudio = document.createElement('audio');
     this.testCanvas = document.createElement('canvas');
     this.body = document.body || document.getElementsByTagName('body')[0];
-    this.version = '2.1.1';
+    this.version = '2.1.2';
   }
 
   // get Radiant MediaLyzer version
@@ -5796,12 +5796,12 @@ var RadiantML = exports.RadiantML = function () {
     return false;
   };
 
-  // test for Dalaa video with Opus audio
+  // test for Daala video with Opus audio
 
 
-  RadiantML.prototype.oggDalaaOpus = function oggDalaaOpus() {
+  RadiantML.prototype.oggDaalaOpus = function oggDaalaOpus() {
     if (this.video5()) {
-      var mimeType = 'video/ogg; codecs="dalaa, opus"';
+      var mimeType = 'video/ogg; codecs="daala, opus"';
       return this.canPlayType('video', mimeType, true);
     }
     return false;
