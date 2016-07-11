@@ -1,6 +1,6 @@
 {
   "name": "radiant-medialyzer",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "author": "Arnaud Leyder <arnaud@radiantmediaplayer.com>",
   "description": "An open source JavaScript library to detect media-related features",
   "repository": {
@@ -32,6 +32,7 @@
     "grunt-contrib-less": "^1.3.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-shell": "^1.3.0",
+    "grunt-text-replace": "^0.4.0",
     "load-grunt-tasks": "^3.5.0"
   }
 }

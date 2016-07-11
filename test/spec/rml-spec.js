@@ -8,7 +8,7 @@ Object.defineProperty(exports, "__esModule", {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Radiant MediaLyzer 2.0.3 | http://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.1.0 | http://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
  * MIT License http://www.radiantmedialyzer.net/license.html
  */
@@ -178,10 +178,10 @@ var RadiantML = exports.RadiantML = function () {
     return false;
   };
 
-  // test for WebM VP8 video support
+  // test for WebM VP8 video support with Vorbis audio
 
 
-  RadiantML.prototype.webmVP8 = function webmVP8() {
+  RadiantML.prototype.webmVP8Vorbis = function webmVP8Vorbis() {
     if (this.video5()) {
       var mimeType = 'video/webm; codecs="vp8, vorbis"';
       return this.canPlayType('video', mimeType, true);
@@ -189,10 +189,10 @@ var RadiantML = exports.RadiantML = function () {
     return false;
   };
 
-  // test for WebM VP9 video support
+  // test for WebM VP9 video support with Vorbis audio
 
 
-  RadiantML.prototype.webmVP9 = function webmVP9() {
+  RadiantML.prototype.webmVP9Vorbis = function webmVP9Vorbis() {
     if (this.video5()) {
       var mimeType = 'video/webm; codecs="vp9, vorbis"';
       return this.canPlayType('video', mimeType, true);
@@ -200,12 +200,45 @@ var RadiantML = exports.RadiantML = function () {
     return false;
   };
 
-  // test for OGG Theora video support
+  // test for WebM VP9 video support with Opus audio
 
 
-  RadiantML.prototype.oggTheora = function oggTheora() {
+  RadiantML.prototype.webmVP9Opus = function webmVP9Opus() {
+    if (this.video5()) {
+      var mimeType = 'video/webm; codecs="vp9, opus"';
+      return this.canPlayType('video', mimeType, true);
+    }
+    return false;
+  };
+
+  // test for Dalaa video with Opus audio
+
+
+  RadiantML.prototype.oggDalaaOpus = function oggDalaaOpus() {
+    if (this.video5()) {
+      var mimeType = 'video/ogg; codecs="dalaa, opus"';
+      return this.canPlayType('video', mimeType, true);
+    }
+    return false;
+  };
+
+  // test for OGG Theora video with Vorbis audio
+
+
+  RadiantML.prototype.oggTheoraVorbis = function oggTheoraVorbis() {
     if (this.video5()) {
       var mimeType = 'video/ogg; codecs="theora, vorbis"';
+      return this.canPlayType('video', mimeType, true);
+    }
+    return false;
+  };
+
+  // test for OGG Dirac video with Vorbis audio
+
+
+  RadiantML.prototype.oggDiracVorbis = function oggDiracVorbis() {
+    if (this.video5()) {
+      var mimeType = 'video/ogg; codecs="dirac, vorbis"';
       return this.canPlayType('video', mimeType, true);
     }
     return false;
@@ -215,7 +248,7 @@ var RadiantML = exports.RadiantML = function () {
   // and Low-Complexity AAC audio
 
 
-  RadiantML.prototype.threeGPP = function threeGPP() {
+  RadiantML.prototype.threeGPPM4VSPAAC = function threeGPPM4VSPAAC() {
     if (this.video5()) {
       var mimeType = 'video/3gpp; codecs="mp4v.20.8, mp4a.40.2"';
       return this.canPlayType('video', mimeType, true);
@@ -223,14 +256,25 @@ var RadiantML = exports.RadiantML = function () {
     return false;
   };
 
-  // test for Apple HTTP Live Streaming video support (.m3u8)
+  // test for Apple HTTP Live Streaming video support (.m3u8) with H.264/AAC content in .ts
 
 
-  RadiantML.prototype.hlsVideo = function hlsVideo() {
-    if (this.video5()) {
+  RadiantML.prototype.nativeHLSVideo = function nativeHLSVideo() {
+    if (this.video5() && this.mp4H264AAC()) {
       // HLS video MIME type as per
       // https://tools.ietf.org/html/draft-pantos-http-live-streaming-14
       var mimeType = 'application/vnd.apple.mpegurl';
+      return this.canPlayType('video', mimeType, false);
+    }
+    return false;
+  };
+
+  // test for MPEG-DASH with H.264/AAC content
+
+
+  RadiantML.prototype.nativeMPEGDASHVideo = function nativeMPEGDASHVideo() {
+    if (this.video5() && this.mp4H264AAC()) {
+      var mimeType = 'application/dash+xml';
       return this.canPlayType('video', mimeType, false);
     }
     return false;
@@ -341,6 +385,17 @@ var RadiantML = exports.RadiantML = function () {
     return false;
   };
 
+  // test for OGG with speex audio support
+
+
+  RadiantML.prototype.oggSpeex = function oggSpeex() {
+    if (this.audio5()) {
+      var mimeType = 'audio/ogg; codecs="speex"';
+      return this.canPlayType('audio', mimeType, true);
+    }
+    return false;
+  };
+
   // test for PCM in wav container support
 
 
@@ -356,10 +411,10 @@ var RadiantML = exports.RadiantML = function () {
     return false;
   };
 
-  // test for Apple HTTP Live Streaming audio support (.m3u)
+  // test for Apple HTTP Live Streaming audio support (.m3u) with AAC in .aac
 
 
-  RadiantML.prototype.hlsAudio = function hlsAudio() {
+  RadiantML.prototype.nativeHLSAudio = function nativeHLSAudio() {
     if (this.audio5()) {
       // HLS video MIME type as per
       // https://tools.ietf.org/html/draft-pantos-http-live-streaming-14
@@ -581,20 +636,32 @@ var _rmlClass = require('../../src/rml-class');
       expect(rml.mp4H264AAC()).toBe(true);
       expect(rml.mp4H264AAC('high', 4.1)).toBe(true);
     });
-    it("webmVP8", function () {
-      expect(rml.webmVP8()).toBe(true);
+    it("webmVP8Vorbis", function () {
+      expect(rml.webmVP8Vorbis()).toBe(true);
     });
-    it("webmVP9", function () {
-      expect(rml.webmVP9()).toBe(true);
+    it("webmVP9Vorbis", function () {
+      expect(rml.webmVP9Vorbis()).toBe(true);
     });
-    it("oggTheora", function () {
-      expect(rml.oggTheora()).toBe(true);
+    it("webmVP9Opus", function () {
+      expect(rml.webmVP9Opus()).toBe(true);
     });
-    it("threeGPP", function () {
-      expect(rml.threeGPP()).toBe(false);
+    it("oggDalaaOpus", function () {
+      expect(rml.oggDalaaOpus()).toBe(false);
     });
-    it("hlsVideo", function () {
-      expect(rml.hlsVideo()).toBe(false);
+    it("oggTheoraVorbis", function () {
+      expect(rml.oggTheoraVorbis()).toBe(true);
+    });
+    it("oggDiracVorbis", function () {
+      expect(rml.oggDiracVorbis()).toBe(false);
+    });
+    it("threeGPPM4VSPAAC", function () {
+      expect(rml.threeGPPM4VSPAAC()).toBe(false);
+    });
+    it("nativeHLSVideo", function () {
+      expect(rml.nativeHLSVideo()).toBe(false);
+    });
+    it("nativeMPEGDASHVideo", function () {
+      expect(rml.nativeMPEGDASHVideo()).toBe(false);
     });
     it("audio5", function () {
       expect(rml.audio5()).toBe(true);
@@ -624,11 +691,14 @@ var _rmlClass = require('../../src/rml-class');
     it("oggFLAC", function () {
       expect(rml.oggFLAC()).toBe(false);
     });
+    it("oggSpeex", function () {
+      expect(rml.oggSpeex()).toBe(false);
+    });
     it("wavPCM", function () {
       expect(rml.wavPCM()).toBe(true);
     });
-    it("hlsAudio", function () {
-      expect(rml.hlsAudio()).toBe(false);
+    it("nativeHLSAudio", function () {
+      expect(rml.nativeHLSAudio()).toBe(false);
     });
     it("webAudio", function () {
       expect(rml.nativeFS()).toBe(true);
@@ -662,7 +732,7 @@ var _rmlClass = require('../../src/rml-class');
     });
   });
 })(); /**
-       * Radiant MediaLyzer 2.0.3 | http://www.radiantmedialyzer.net
+       * Radiant MediaLyzer 2.1.0 | http://www.radiantmedialyzer.net
        * @license Copyright (c) 2016  Arnaud Leyder EIRL
        * MIT License http://www.radiantmedialyzer.net/license.html
        */

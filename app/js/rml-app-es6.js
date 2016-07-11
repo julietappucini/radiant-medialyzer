@@ -1,5 +1,5 @@
 /**
- * Radiant MediaLyzer 2.0.3 | http://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.1.0 | http://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
  * MIT License http://www.radiantmedialyzer.net/license.html
  */
@@ -92,36 +92,60 @@ import {RadiantML} from '../../src/rml-class';
     main52Span.innerHTML = notSupportedHTML;
   }
 
-  let vp8WebMSpan = document.getElementById('vp8-webm');
-  let vp9WebMSpan = document.getElementById('vp9-webm');
-  let theoraSpan = document.getElementById('theora-ogg');
+  let vp8VorbisWebMSpan = document.getElementById('vp8-vorbis-webm');
+  let vp9VorbisWebMSpan = document.getElementById('vp9-vorbis-webm');
+  let vp9OpusWebMSpan = document.getElementById('vp9-opus-webm');
+  let dalaaOpusSpan = document.getElementById('dalaa-opus-ogg');
+  let theoraVorbisSpan = document.getElementById('theora-vorbis-ogg');
+  let diracVorbisSpan = document.getElementById('dirac-vorbis-ogg');
   let threeGPPSpan = document.getElementById('3gpp');
   let hlsSpan = document.getElementById('hls');
+  let dashSpan = document.getElementById('dash');
 
-  if (rml.webmVP8()) {
-    vp8WebMSpan.innerHTML = supportedHTML;
+  if (rml.webmVP8Vorbis()) {
+    vp8VorbisWebMSpan.innerHTML = supportedHTML;
   } else {
-    vp8WebMSpan.innerHTML = notSupportedHTML;
+    vp8VorbisWebMSpan.innerHTML = notSupportedHTML;
   }
-  if (rml.webmVP9()) {
-    vp9WebMSpan.innerHTML = supportedHTML;
+  if (rml.webmVP9Vorbis()) {
+    vp9VorbisWebMSpan.innerHTML = supportedHTML;
   } else {
-    vp9WebMSpan.innerHTML = notSupportedHTML;
+    vp9VorbisWebMSpan.innerHTML = notSupportedHTML;
   }
-  if (rml.oggTheora()) {
-    theoraSpan.innerHTML = supportedHTML;
+  if (rml.webmVP9Opus()) {
+    vp9OpusWebMSpan.innerHTML = supportedHTML;
   } else {
-    theoraSpan.innerHTML = notSupportedHTML;
+    vp9OpusWebMSpan.innerHTML = notSupportedHTML;
   }
-  if (rml.threeGPP()) {
+  if (rml.oggDalaaOpus()) {
+    dalaaOpusSpan.innerHTML = supportedHTML;
+  } else {
+    dalaaOpusSpan.innerHTML = notSupportedHTML;
+  }
+  if (rml.oggTheoraVorbis()) {
+    theoraVorbisSpan.innerHTML = supportedHTML;
+  } else {
+    theoraVorbisSpan.innerHTML = notSupportedHTML;
+  }
+  if (rml.oggDiracVorbis()) {
+    diracVorbisSpan.innerHTML = supportedHTML;
+  } else {
+    diracVorbisSpan.innerHTML = notSupportedHTML;
+  }
+  if (rml.threeGPPM4VSPAAC()) {
     threeGPPSpan.innerHTML = supportedHTML;
   } else {
     threeGPPSpan.innerHTML = notSupportedHTML;
   }
-  if (rml.hlsVideo() && rml.mp4H264AAC('baseline', 3.0)) {
+  if (rml.nativeHLSVideo()) {
     hlsSpan.innerHTML = supportedHTML;
   } else {
     hlsSpan.innerHTML = notSupportedHTML;
+  }
+  if (rml.nativeMPEGDASHVideo()) {
+    dashSpan.innerHTML = supportedHTML;
+  } else {
+    dashSpan.innerHTML = notSupportedHTML;
   }
 
   let mseSpan = document.getElementById('mse');
@@ -183,84 +207,91 @@ import {RadiantML} from '../../src/rml-class';
   }
 
   let audioSpan = document.getElementById('audio');
+  let aacLCSpan = document.getElementById('aac-lc');
+  let heAACSpan = document.getElementById('he-aac');
+  let heAACv2Span = document.getElementById('he-aacv2');
+  let hlsAudioSpan = document.getElementById('hls-audio');
+  let ac3Span = document.getElementById('ac3');
+  let mp3Span = document.getElementById('mp3');
+  let webmVorbisSpan = document.getElementById('webm-vorbis');
+  let webmOpusSpan = document.getElementById('webm-opus');
+  let oggVorbisSpan = document.getElementById('ogg-vorbis');
+  let oggOpusSpan = document.getElementById('ogg-opus');
+  let oggFLACSpan = document.getElementById('ogg-flac');
+  let oggSpeexSpan = document.getElementById('ogg-speex');
+  let wavSpan = document.getElementById('wav');
+  let webAudioSpan = document.getElementById('web-audio');
+
   if (rml.audio5()) {
     audioSpan.innerHTML = supportedHTML;
   } else {
     audioSpan.innerHTML = notSupportedHTML;
   }
-  let aacLCSpan = document.getElementById('aac-lc');
   if (rml.m4aAAC()) {
     aacLCSpan.innerHTML = supportedHTML;
   } else {
     aacLCSpan.innerHTML = notSupportedHTML;
   }
-  let heAACSpan = document.getElementById('he-aac');
   if (rml.m4aAAC('he-aac')) {
     heAACSpan.innerHTML = supportedHTML;
   } else {
     heAACSpan.innerHTML = notSupportedHTML;
   }
-  let heAACv2Span = document.getElementById('he-aacv2');
   if (rml.m4aAAC('he-aacv2')) {
     heAACv2Span.innerHTML = supportedHTML;
   } else {
     heAACv2Span.innerHTML = notSupportedHTML;
   }
-  let hlsAudioSpan = document.getElementById('hls-audio');
-  if (rml.hlsAudio()) {
+  if (rml.nativeHLSAudio()) {
     hlsAudioSpan.innerHTML = supportedHTML;
   } else {
     hlsAudioSpan.innerHTML = notSupportedHTML;
   }
-  let ac3Span = document.getElementById('ac3');
   if (rml.m4aAC3()) {
     ac3Span.innerHTML = supportedHTML;
   } else {
     ac3Span.innerHTML = notSupportedHTML;
   }
-  let mp3Span = document.getElementById('mp3');
   if (rml.mp3()) {
     mp3Span.innerHTML = supportedHTML;
   } else {
     mp3Span.innerHTML = notSupportedHTML;
   }
-  let webmVorbisSpan = document.getElementById('webm-vorbis');
   if (rml.webmVorbis()) {
     webmVorbisSpan.innerHTML = supportedHTML;
   } else {
     webmVorbisSpan.innerHTML = notSupportedHTML;
   }
-  let webmOpusSpan = document.getElementById('webm-opus');
   if (rml.webmOpus()) {
     webmOpusSpan.innerHTML = supportedHTML;
   } else {
     webmOpusSpan.innerHTML = notSupportedHTML;
   }
-  let oggVorbisSpan = document.getElementById('ogg-vorbis');
   if (rml.oggVorbis()) {
     oggVorbisSpan.innerHTML = supportedHTML;
   } else {
     oggVorbisSpan.innerHTML = notSupportedHTML;
   }
-  let oggOpusSpan = document.getElementById('ogg-opus');
   if (rml.oggOpus()) {
     oggOpusSpan.innerHTML = supportedHTML;
   } else {
     oggOpusSpan.innerHTML = notSupportedHTML;
   }
-  let oggFLACSpan = document.getElementById('ogg-flac');
   if (rml.oggFLAC()) {
     oggFLACSpan.innerHTML = supportedHTML;
   } else {
     oggFLACSpan.innerHTML = notSupportedHTML;
   }
-  let wavSpan = document.getElementById('wav');
+  if (rml.oggSpeex()) {
+    oggSpeexSpan.innerHTML = supportedHTML;
+  } else {
+    oggSpeexSpan.innerHTML = notSupportedHTML;
+  }
   if (rml.wavPCM()) {
     wavSpan.innerHTML = supportedHTML;
   } else {
     wavSpan.innerHTML = notSupportedHTML;
   }
-  let webAudioSpan = document.getElementById('web-audio');
   if (rml.webAudio()) {
     webAudioSpan.innerHTML = supportedHTML;
   } else {
@@ -268,31 +299,31 @@ import {RadiantML} from '../../src/rml-class';
   }
 
   let canvasSpan = document.getElementById('canvas');
+  let canvasTextSpan = document.getElementById('canvas-text');
+  let canvasBlendingSpan = document.getElementById('canvas-blending');
+  let canvasWebGLSpan = document.getElementById('canvas-webgl');
+  let webWorkersSpan = document.getElementById('web-workers');
+
   if (rml.canvas()) {
     canvasSpan.innerHTML = supportedHTML;
   } else {
     canvasSpan.innerHTML = notSupportedHTML;
   }
-  let canvasTextSpan = document.getElementById('canvas-text');
   if (rml.canvasText()) {
     canvasTextSpan.innerHTML = supportedHTML;
   } else {
     canvasTextSpan.innerHTML = notSupportedHTML;
   }
-  let canvasBlendingSpan = document.getElementById('canvas-blending');
   if (rml.canvasBlending()) {
     canvasBlendingSpan.innerHTML = supportedHTML;
   } else {
     canvasBlendingSpan.innerHTML = notSupportedHTML;
   }
-  let canvasWebGLSpan = document.getElementById('canvas-webgl');
   if (rml.canvasWebGL()) {
     canvasWebGLSpan.innerHTML = supportedHTML;
   } else {
     canvasWebGLSpan.innerHTML = notSupportedHTML;
   }
-
-  let webWorkersSpan = document.getElementById('web-workers');
   if (rml.webWorker()) {
     webWorkersSpan.innerHTML = supportedHTML;
   } else {

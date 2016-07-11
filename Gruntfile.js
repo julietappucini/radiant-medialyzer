@@ -31,6 +31,42 @@ module.exports = function (grunt) {
         }
       }
     },
+    replace: {
+      versionLib: {
+        src: [
+          'src/rml-class.js',
+          'app/js/rml-app-es6.js',
+          'test/spec/rml-spec-es6.js'
+        ],
+        overwrite: true,
+        replacements: [
+          {
+            from: /Radiant MediaLyzer\s+\d+\.\d+\.\d+/,
+            to: 'Radiant MediaLyzer <%= pkg.version %>'
+          },
+          {
+            from: /this\.version\s+=\s+'\d+\.\d+\.\d+'/,
+            to: 'this.version = \'<%= pkg.version %>\''
+          }
+        ]
+      },
+      versionSite: {
+        src: [
+          'site/*.html'
+        ],
+        overwrite: true,
+        replacements: [
+          {
+            from: /css\/rml-theme\.\d+\.\d+\.\d+\.min\.css/,
+            to: 'css/rml-theme.<%= pkg.version %>.min.css'
+          },
+          {
+            from: />\d+\.\d+\.\d+<\/a>/,
+            to: '><%= pkg.version %></a>'
+          }
+        ]
+      }
+    },
     shell: {
       jshint: {
         command: 'jshint Gruntfile.js src/rml-class.js app/js/rml-app-es6.js test/spec/rml-spec-es6.js'
@@ -71,14 +107,17 @@ module.exports = function (grunt) {
   // Default task(s).
   grunt.registerTask('default', [
     'shell:jshint',
+    'replace:versionLib',
     'shell:browserify',
     'shell:browserifyTest'
   ]);
   grunt.registerTask('site', [
     'shell:jshint',
+    'replace:versionLib',
     'shell:browserify',
     'shell:browserifyTest',
     'less',
+    'replace:versionSite',
     'copy'
   ]);
 };

@@ -1,5 +1,5 @@
 /**
- * Radiant MediaLyzer 2.0.3 | http://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.1.0 | http://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
  * MIT License http://www.radiantmedialyzer.net/license.html
  */
@@ -12,7 +12,7 @@ export class RadiantML {
     this.testAudio = document.createElement('audio');
     this.testCanvas = document.createElement('canvas');
     this.body = document.body || document.getElementsByTagName('body')[0];
-    this.version = '2.0.3';
+    this.version = '2.1.0';
   }
 
   // get Radiant MediaLyzer version
@@ -139,8 +139,8 @@ export class RadiantML {
     return false;
   }
 
-  // test for WebM VP8 video support
-  webmVP8() {
+  // test for WebM VP8 video support with Vorbis audio
+  webmVP8Vorbis() {
     if (this.video5()) {
       let mimeType = 'video/webm; codecs="vp8, vorbis"';
       return this.canPlayType('video', mimeType, true);
@@ -148,8 +148,8 @@ export class RadiantML {
     return false;
   }
 
-  // test for WebM VP9 video support
-  webmVP9() {
+  // test for WebM VP9 video support with Vorbis audio
+  webmVP9Vorbis() {
     if (this.video5()) {
       let mimeType = 'video/webm; codecs="vp9, vorbis"';
       return this.canPlayType('video', mimeType, true);
@@ -157,8 +157,26 @@ export class RadiantML {
     return false;
   }
 
-  // test for OGG Theora video support
-  oggTheora() {
+  // test for WebM VP9 video support with Opus audio
+  webmVP9Opus() {
+    if (this.video5()) {
+      let mimeType = 'video/webm; codecs="vp9, opus"';
+      return this.canPlayType('video', mimeType, true);
+    }
+    return false;
+  }
+
+  // test for Dalaa video with Opus audio
+  oggDalaaOpus() {
+    if (this.video5()) {
+      let mimeType = 'video/ogg; codecs="dalaa, opus"';
+      return this.canPlayType('video', mimeType, true);
+    }
+    return false;
+  }
+
+  // test for OGG Theora video with Vorbis audio
+  oggTheoraVorbis() {
     if (this.video5()) {
       let mimeType = 'video/ogg; codecs="theora, vorbis"';
       return this.canPlayType('video', mimeType, true);
@@ -166,9 +184,18 @@ export class RadiantML {
     return false;
   }
 
+  // test for OGG Dirac video with Vorbis audio
+  oggDiracVorbis() {
+    if (this.video5()) {
+      let mimeType = 'video/ogg; codecs="dirac, vorbis"';
+      return this.canPlayType('video', mimeType, true);
+    }
+    return false;
+  }
+
   // test for 3GPP with MPEG-4 Visual Simple Profile Level 0 video  
   // and Low-Complexity AAC audio
-  threeGPP() {
+  threeGPPM4VSPAAC() {
     if (this.video5()) {
       let mimeType = 'video/3gpp; codecs="mp4v.20.8, mp4a.40.2"';
       return this.canPlayType('video', mimeType, true);
@@ -176,12 +203,21 @@ export class RadiantML {
     return false;
   }
 
-  // test for Apple HTTP Live Streaming video support (.m3u8)
-  hlsVideo() {
-    if (this.video5()) {
+  // test for Apple HTTP Live Streaming video support (.m3u8) with H.264/AAC content in .ts
+  nativeHLSVideo() {
+    if (this.video5() && this.mp4H264AAC()) {
       // HLS video MIME type as per
       // https://tools.ietf.org/html/draft-pantos-http-live-streaming-14
       let mimeType = 'application/vnd.apple.mpegurl';
+      return this.canPlayType('video', mimeType, false);
+    }
+    return false;
+  }
+
+  // test for MPEG-DASH with H.264/AAC content
+  nativeMPEGDASHVideo() {
+    if (this.video5() && this.mp4H264AAC()) {
+      let mimeType = 'application/dash+xml';
       return this.canPlayType('video', mimeType, false);
     }
     return false;
@@ -275,6 +311,15 @@ export class RadiantML {
     return false;
   }
 
+  // test for OGG with speex audio support
+  oggSpeex() {
+    if (this.audio5()) {
+      let mimeType = 'audio/ogg; codecs="speex"';
+      return this.canPlayType('audio', mimeType, true);
+    }
+    return false;
+  }
+
   // test for PCM in wav container support
   wavPCM() {
     if (this.audio5()) {
@@ -290,8 +335,8 @@ export class RadiantML {
     return false;
   }
 
-  // test for Apple HTTP Live Streaming audio support (.m3u)
-  hlsAudio() {
+  // test for Apple HTTP Live Streaming audio support (.m3u) with AAC in .aac
+  nativeHLSAudio() {
     if (this.audio5()) {
       // HLS video MIME type as per
       // https://tools.ietf.org/html/draft-pantos-http-live-streaming-14

@@ -1,5 +1,5 @@
 /**
- * Radiant MediaLyzer 2.0.3 | http://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.1.0 | http://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
  * MIT License http://www.radiantmedialyzer.net/license.html
  */
@@ -10,7 +10,7 @@ import {RadiantML} from '../../src/rml-class';
   'use strict';
 
   const rml = new RadiantML();
-  
+
   describe("Radiant MediaLyzer unit test suite for Google Chrome 51 on Windows 10", () => {
     // user agent
     it("getUserAgent", () => {
@@ -89,20 +89,32 @@ import {RadiantML} from '../../src/rml-class';
       expect(rml.mp4H264AAC()).toBe(true);
       expect(rml.mp4H264AAC('high', 4.1)).toBe(true);
     });
-    it("webmVP8", () => {
-      expect(rml.webmVP8()).toBe(true);
+    it("webmVP8Vorbis", () => {
+      expect(rml.webmVP8Vorbis()).toBe(true);
     });
-    it("webmVP9", () => {
-      expect(rml.webmVP9()).toBe(true);
+    it("webmVP9Vorbis", () => {
+      expect(rml.webmVP9Vorbis()).toBe(true);
     });
-    it("oggTheora", () => {
-      expect(rml.oggTheora()).toBe(true);
+    it("webmVP9Opus", () => {
+      expect(rml.webmVP9Opus()).toBe(true);
     });
-    it("threeGPP", () => {
-      expect(rml.threeGPP()).toBe(false);
+    it("oggDalaaOpus", () => {
+      expect(rml.oggDalaaOpus()).toBe(false);
     });
-    it("hlsVideo", () => {
-      expect(rml.hlsVideo()).toBe(false);
+    it("oggTheoraVorbis", () => {
+      expect(rml.oggTheoraVorbis()).toBe(true);
+    });
+    it("oggDiracVorbis", () => {
+      expect(rml.oggDiracVorbis()).toBe(false);
+    });
+    it("threeGPPM4VSPAAC", () => {
+      expect(rml.threeGPPM4VSPAAC()).toBe(false);
+    });
+    it("nativeHLSVideo", () => {
+      expect(rml.nativeHLSVideo()).toBe(false);
+    });
+    it("nativeMPEGDASHVideo", () => {
+      expect(rml.nativeMPEGDASHVideo()).toBe(false);
     });
     it("audio5", () => {
       expect(rml.audio5()).toBe(true);
@@ -132,11 +144,14 @@ import {RadiantML} from '../../src/rml-class';
     it("oggFLAC", () => {
       expect(rml.oggFLAC()).toBe(false);
     });
+    it("oggSpeex", () => { 
+      expect(rml.oggSpeex()).toBe(false);
+    });
     it("wavPCM", () => {
       expect(rml.wavPCM()).toBe(true);
     });
-    it("hlsAudio", () => {
-      expect(rml.hlsAudio()).toBe(false);
+    it("nativeHLSAudio", () => {
+      expect(rml.nativeHLSAudio()).toBe(false);
     });
     it("webAudio", () => {
       expect(rml.nativeFS()).toBe(true);

@@ -6,7 +6,7 @@ require('core-js/es6');
 var _rmlClass = require('../../src/rml-class');
 
 /**
- * Radiant MediaLyzer 2.0.3 | http://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.1.0 | http://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
  * MIT License http://www.radiantmedialyzer.net/license.html
  */
@@ -96,36 +96,60 @@ var _rmlClass = require('../../src/rml-class');
     main52Span.innerHTML = notSupportedHTML;
   }
 
-  var vp8WebMSpan = document.getElementById('vp8-webm');
-  var vp9WebMSpan = document.getElementById('vp9-webm');
-  var theoraSpan = document.getElementById('theora-ogg');
+  var vp8VorbisWebMSpan = document.getElementById('vp8-vorbis-webm');
+  var vp9VorbisWebMSpan = document.getElementById('vp9-vorbis-webm');
+  var vp9OpusWebMSpan = document.getElementById('vp9-opus-webm');
+  var dalaaOpusSpan = document.getElementById('dalaa-opus-ogg');
+  var theoraVorbisSpan = document.getElementById('theora-vorbis-ogg');
+  var diracVorbisSpan = document.getElementById('dirac-vorbis-ogg');
   var threeGPPSpan = document.getElementById('3gpp');
   var hlsSpan = document.getElementById('hls');
+  var dashSpan = document.getElementById('dash');
 
-  if (rml.webmVP8()) {
-    vp8WebMSpan.innerHTML = supportedHTML;
+  if (rml.webmVP8Vorbis()) {
+    vp8VorbisWebMSpan.innerHTML = supportedHTML;
   } else {
-    vp8WebMSpan.innerHTML = notSupportedHTML;
+    vp8VorbisWebMSpan.innerHTML = notSupportedHTML;
   }
-  if (rml.webmVP9()) {
-    vp9WebMSpan.innerHTML = supportedHTML;
+  if (rml.webmVP9Vorbis()) {
+    vp9VorbisWebMSpan.innerHTML = supportedHTML;
   } else {
-    vp9WebMSpan.innerHTML = notSupportedHTML;
+    vp9VorbisWebMSpan.innerHTML = notSupportedHTML;
   }
-  if (rml.oggTheora()) {
-    theoraSpan.innerHTML = supportedHTML;
+  if (rml.webmVP9Opus()) {
+    vp9OpusWebMSpan.innerHTML = supportedHTML;
   } else {
-    theoraSpan.innerHTML = notSupportedHTML;
+    vp9OpusWebMSpan.innerHTML = notSupportedHTML;
   }
-  if (rml.threeGPP()) {
+  if (rml.oggDalaaOpus()) {
+    dalaaOpusSpan.innerHTML = supportedHTML;
+  } else {
+    dalaaOpusSpan.innerHTML = notSupportedHTML;
+  }
+  if (rml.oggTheoraVorbis()) {
+    theoraVorbisSpan.innerHTML = supportedHTML;
+  } else {
+    theoraVorbisSpan.innerHTML = notSupportedHTML;
+  }
+  if (rml.oggDiracVorbis()) {
+    diracVorbisSpan.innerHTML = supportedHTML;
+  } else {
+    diracVorbisSpan.innerHTML = notSupportedHTML;
+  }
+  if (rml.threeGPPM4VSPAAC()) {
     threeGPPSpan.innerHTML = supportedHTML;
   } else {
     threeGPPSpan.innerHTML = notSupportedHTML;
   }
-  if (rml.hlsVideo() && rml.mp4H264AAC('baseline', 3.0)) {
+  if (rml.nativeHLSVideo()) {
     hlsSpan.innerHTML = supportedHTML;
   } else {
     hlsSpan.innerHTML = notSupportedHTML;
+  }
+  if (rml.nativeMPEGDASHVideo()) {
+    dashSpan.innerHTML = supportedHTML;
+  } else {
+    dashSpan.innerHTML = notSupportedHTML;
   }
 
   var mseSpan = document.getElementById('mse');
@@ -187,84 +211,91 @@ var _rmlClass = require('../../src/rml-class');
   }
 
   var audioSpan = document.getElementById('audio');
+  var aacLCSpan = document.getElementById('aac-lc');
+  var heAACSpan = document.getElementById('he-aac');
+  var heAACv2Span = document.getElementById('he-aacv2');
+  var hlsAudioSpan = document.getElementById('hls-audio');
+  var ac3Span = document.getElementById('ac3');
+  var mp3Span = document.getElementById('mp3');
+  var webmVorbisSpan = document.getElementById('webm-vorbis');
+  var webmOpusSpan = document.getElementById('webm-opus');
+  var oggVorbisSpan = document.getElementById('ogg-vorbis');
+  var oggOpusSpan = document.getElementById('ogg-opus');
+  var oggFLACSpan = document.getElementById('ogg-flac');
+  var oggSpeexSpan = document.getElementById('ogg-speex');
+  var wavSpan = document.getElementById('wav');
+  var webAudioSpan = document.getElementById('web-audio');
+
   if (rml.audio5()) {
     audioSpan.innerHTML = supportedHTML;
   } else {
     audioSpan.innerHTML = notSupportedHTML;
   }
-  var aacLCSpan = document.getElementById('aac-lc');
   if (rml.m4aAAC()) {
     aacLCSpan.innerHTML = supportedHTML;
   } else {
     aacLCSpan.innerHTML = notSupportedHTML;
   }
-  var heAACSpan = document.getElementById('he-aac');
   if (rml.m4aAAC('he-aac')) {
     heAACSpan.innerHTML = supportedHTML;
   } else {
     heAACSpan.innerHTML = notSupportedHTML;
   }
-  var heAACv2Span = document.getElementById('he-aacv2');
   if (rml.m4aAAC('he-aacv2')) {
     heAACv2Span.innerHTML = supportedHTML;
   } else {
     heAACv2Span.innerHTML = notSupportedHTML;
   }
-  var hlsAudioSpan = document.getElementById('hls-audio');
-  if (rml.hlsAudio()) {
+  if (rml.nativeHLSAudio()) {
     hlsAudioSpan.innerHTML = supportedHTML;
   } else {
     hlsAudioSpan.innerHTML = notSupportedHTML;
   }
-  var ac3Span = document.getElementById('ac3');
   if (rml.m4aAC3()) {
     ac3Span.innerHTML = supportedHTML;
   } else {
     ac3Span.innerHTML = notSupportedHTML;
   }
-  var mp3Span = document.getElementById('mp3');
   if (rml.mp3()) {
     mp3Span.innerHTML = supportedHTML;
   } else {
     mp3Span.innerHTML = notSupportedHTML;
   }
-  var webmVorbisSpan = document.getElementById('webm-vorbis');
   if (rml.webmVorbis()) {
     webmVorbisSpan.innerHTML = supportedHTML;
   } else {
     webmVorbisSpan.innerHTML = notSupportedHTML;
   }
-  var webmOpusSpan = document.getElementById('webm-opus');
   if (rml.webmOpus()) {
     webmOpusSpan.innerHTML = supportedHTML;
   } else {
     webmOpusSpan.innerHTML = notSupportedHTML;
   }
-  var oggVorbisSpan = document.getElementById('ogg-vorbis');
   if (rml.oggVorbis()) {
     oggVorbisSpan.innerHTML = supportedHTML;
   } else {
     oggVorbisSpan.innerHTML = notSupportedHTML;
   }
-  var oggOpusSpan = document.getElementById('ogg-opus');
   if (rml.oggOpus()) {
     oggOpusSpan.innerHTML = supportedHTML;
   } else {
     oggOpusSpan.innerHTML = notSupportedHTML;
   }
-  var oggFLACSpan = document.getElementById('ogg-flac');
   if (rml.oggFLAC()) {
     oggFLACSpan.innerHTML = supportedHTML;
   } else {
     oggFLACSpan.innerHTML = notSupportedHTML;
   }
-  var wavSpan = document.getElementById('wav');
+  if (rml.oggSpeex()) {
+    oggSpeexSpan.innerHTML = supportedHTML;
+  } else {
+    oggSpeexSpan.innerHTML = notSupportedHTML;
+  }
   if (rml.wavPCM()) {
     wavSpan.innerHTML = supportedHTML;
   } else {
     wavSpan.innerHTML = notSupportedHTML;
   }
-  var webAudioSpan = document.getElementById('web-audio');
   if (rml.webAudio()) {
     webAudioSpan.innerHTML = supportedHTML;
   } else {
@@ -272,31 +303,31 @@ var _rmlClass = require('../../src/rml-class');
   }
 
   var canvasSpan = document.getElementById('canvas');
+  var canvasTextSpan = document.getElementById('canvas-text');
+  var canvasBlendingSpan = document.getElementById('canvas-blending');
+  var canvasWebGLSpan = document.getElementById('canvas-webgl');
+  var webWorkersSpan = document.getElementById('web-workers');
+
   if (rml.canvas()) {
     canvasSpan.innerHTML = supportedHTML;
   } else {
     canvasSpan.innerHTML = notSupportedHTML;
   }
-  var canvasTextSpan = document.getElementById('canvas-text');
   if (rml.canvasText()) {
     canvasTextSpan.innerHTML = supportedHTML;
   } else {
     canvasTextSpan.innerHTML = notSupportedHTML;
   }
-  var canvasBlendingSpan = document.getElementById('canvas-blending');
   if (rml.canvasBlending()) {
     canvasBlendingSpan.innerHTML = supportedHTML;
   } else {
     canvasBlendingSpan.innerHTML = notSupportedHTML;
   }
-  var canvasWebGLSpan = document.getElementById('canvas-webgl');
   if (rml.canvasWebGL()) {
     canvasWebGLSpan.innerHTML = supportedHTML;
   } else {
     canvasWebGLSpan.innerHTML = notSupportedHTML;
   }
-
-  var webWorkersSpan = document.getElementById('web-workers');
   if (rml.webWorker()) {
     webWorkersSpan.innerHTML = supportedHTML;
   } else {
@@ -5562,7 +5593,7 @@ Object.defineProperty(exports, "__esModule", {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Radiant MediaLyzer 2.0.3 | http://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.1.0 | http://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
  * MIT License http://www.radiantmedialyzer.net/license.html
  */
@@ -5732,10 +5763,10 @@ var RadiantML = exports.RadiantML = function () {
     return false;
   };
 
-  // test for WebM VP8 video support
+  // test for WebM VP8 video support with Vorbis audio
 
 
-  RadiantML.prototype.webmVP8 = function webmVP8() {
+  RadiantML.prototype.webmVP8Vorbis = function webmVP8Vorbis() {
     if (this.video5()) {
       var mimeType = 'video/webm; codecs="vp8, vorbis"';
       return this.canPlayType('video', mimeType, true);
@@ -5743,10 +5774,10 @@ var RadiantML = exports.RadiantML = function () {
     return false;
   };
 
-  // test for WebM VP9 video support
+  // test for WebM VP9 video support with Vorbis audio
 
 
-  RadiantML.prototype.webmVP9 = function webmVP9() {
+  RadiantML.prototype.webmVP9Vorbis = function webmVP9Vorbis() {
     if (this.video5()) {
       var mimeType = 'video/webm; codecs="vp9, vorbis"';
       return this.canPlayType('video', mimeType, true);
@@ -5754,12 +5785,45 @@ var RadiantML = exports.RadiantML = function () {
     return false;
   };
 
-  // test for OGG Theora video support
+  // test for WebM VP9 video support with Opus audio
 
 
-  RadiantML.prototype.oggTheora = function oggTheora() {
+  RadiantML.prototype.webmVP9Opus = function webmVP9Opus() {
+    if (this.video5()) {
+      var mimeType = 'video/webm; codecs="vp9, opus"';
+      return this.canPlayType('video', mimeType, true);
+    }
+    return false;
+  };
+
+  // test for Dalaa video with Opus audio
+
+
+  RadiantML.prototype.oggDalaaOpus = function oggDalaaOpus() {
+    if (this.video5()) {
+      var mimeType = 'video/ogg; codecs="dalaa, opus"';
+      return this.canPlayType('video', mimeType, true);
+    }
+    return false;
+  };
+
+  // test for OGG Theora video with Vorbis audio
+
+
+  RadiantML.prototype.oggTheoraVorbis = function oggTheoraVorbis() {
     if (this.video5()) {
       var mimeType = 'video/ogg; codecs="theora, vorbis"';
+      return this.canPlayType('video', mimeType, true);
+    }
+    return false;
+  };
+
+  // test for OGG Dirac video with Vorbis audio
+
+
+  RadiantML.prototype.oggDiracVorbis = function oggDiracVorbis() {
+    if (this.video5()) {
+      var mimeType = 'video/ogg; codecs="dirac, vorbis"';
       return this.canPlayType('video', mimeType, true);
     }
     return false;
@@ -5769,7 +5833,7 @@ var RadiantML = exports.RadiantML = function () {
   // and Low-Complexity AAC audio
 
 
-  RadiantML.prototype.threeGPP = function threeGPP() {
+  RadiantML.prototype.threeGPPM4VSPAAC = function threeGPPM4VSPAAC() {
     if (this.video5()) {
       var mimeType = 'video/3gpp; codecs="mp4v.20.8, mp4a.40.2"';
       return this.canPlayType('video', mimeType, true);
@@ -5777,14 +5841,25 @@ var RadiantML = exports.RadiantML = function () {
     return false;
   };
 
-  // test for Apple HTTP Live Streaming video support (.m3u8)
+  // test for Apple HTTP Live Streaming video support (.m3u8) with H.264/AAC content in .ts
 
 
-  RadiantML.prototype.hlsVideo = function hlsVideo() {
-    if (this.video5()) {
+  RadiantML.prototype.nativeHLSVideo = function nativeHLSVideo() {
+    if (this.video5() && this.mp4H264AAC()) {
       // HLS video MIME type as per
       // https://tools.ietf.org/html/draft-pantos-http-live-streaming-14
       var mimeType = 'application/vnd.apple.mpegurl';
+      return this.canPlayType('video', mimeType, false);
+    }
+    return false;
+  };
+
+  // test for MPEG-DASH with H.264/AAC content
+
+
+  RadiantML.prototype.nativeMPEGDASHVideo = function nativeMPEGDASHVideo() {
+    if (this.video5() && this.mp4H264AAC()) {
+      var mimeType = 'application/dash+xml';
       return this.canPlayType('video', mimeType, false);
     }
     return false;
@@ -5895,6 +5970,17 @@ var RadiantML = exports.RadiantML = function () {
     return false;
   };
 
+  // test for OGG with speex audio support
+
+
+  RadiantML.prototype.oggSpeex = function oggSpeex() {
+    if (this.audio5()) {
+      var mimeType = 'audio/ogg; codecs="speex"';
+      return this.canPlayType('audio', mimeType, true);
+    }
+    return false;
+  };
+
   // test for PCM in wav container support
 
 
@@ -5910,10 +5996,10 @@ var RadiantML = exports.RadiantML = function () {
     return false;
   };
 
-  // test for Apple HTTP Live Streaming audio support (.m3u)
+  // test for Apple HTTP Live Streaming audio support (.m3u) with AAC in .aac
 
 
-  RadiantML.prototype.hlsAudio = function hlsAudio() {
+  RadiantML.prototype.nativeHLSAudio = function nativeHLSAudio() {
     if (this.audio5()) {
       // HLS video MIME type as per
       // https://tools.ietf.org/html/draft-pantos-http-live-streaming-14
