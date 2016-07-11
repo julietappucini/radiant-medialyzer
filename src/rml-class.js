@@ -1,7 +1,7 @@
 /**
- * Radiant MediaLyzer 2.1.0 | http://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.1.1 | https://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
- * MIT License http://www.radiantmedialyzer.net/license.html
+ * MIT License https://www.radiantmedialyzer.net/license.html
  */
 export class RadiantML {
 
@@ -12,7 +12,7 @@ export class RadiantML {
     this.testAudio = document.createElement('audio');
     this.testCanvas = document.createElement('canvas');
     this.body = document.body || document.getElementsByTagName('body')[0];
-    this.version = '2.1.0';
+    this.version = '2.1.1';
   }
 
   // get Radiant MediaLyzer version

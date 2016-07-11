@@ -1,7 +1,7 @@
 /**
- * Radiant MediaLyzer 2.1.0 | http://www.radiantmedialyzer.net
+ * Radiant MediaLyzer 2.1.1 | https://www.radiantmedialyzer.net
  * @license Copyright (c) 2016  Arnaud Leyder EIRL
- * MIT License http://www.radiantmedialyzer.net/license.html
+ * MIT License https://www.radiantmedialyzer.net/license.html
  */
 import 'core-js/es6';
 import {RadiantML} from '../../src/rml-class';

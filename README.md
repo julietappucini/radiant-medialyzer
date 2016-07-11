@@ -1,12 +1,12 @@
 # Radiant MediaLyzer 2
-Home Page: [http://www.radiantmedialyzer.net](http://www.radiantmedialyzer.net)
+Home Page: [https://www.radiantmedialyzer.net](https://www.radiantmedialyzer.net)
 
 Radiant MediaLyzer is a JavaScript API to detect media features for web-based
 environnements. It includes feature detection for Media Source Extensions, 
 Apple HLS, common video/audio codecs, HTML5 media elements, Web Audio API and more.
 
 Radiant MediaLyzer is an open source project released under
-[MIT license](http://www.radiantmedialyzer.net/license.html). Parts of it are used in production 
+[MIT license](https://www.radiantmedialyzer.net/license.html). Parts of it are used in production 
 with [Radiant Media Player](https://www.radiantmediaplayer.com).
 
 Radiant MediaLyzer is provided as an ES2015 JavaScript class. This class would need to be 
@@ -65,8 +65,8 @@ import {RadiantML} from '../../src/rml-class';
 
 ## Complete documentation
 
-[http://www.radiantmedialyzer.net/documentation.html]
-(http://www.radiantmedialyzer.net/documentation.html)
+[https://www.radiantmedialyzer.net/documentation.html]
+(https://www.radiantmedialyzer.net/documentation.html)
 
 ## Test your device media capabilities 
-Go to [http://www.radiantmedialyzer.net](http://www.radiantmedialyzer.net) and see what is green!
+Go to [https://www.radiantmedialyzer.net](https://www.radiantmedialyzer.net) and see what is green!

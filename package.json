@@ -1,6 +1,6 @@
 {
   "name": "radiant-medialyzer",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "author": "Arnaud Leyder <arnaud@radiantmediaplayer.com>",
   "description": "An open source JavaScript library to detect media-related features",
   "repository": {
@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/arnaudleyder/Radiant-MediaLyzer/issues"
   },
-  "homepage": "http://www.radiantmedialyzer.net",
+  "homepage": "https://www.radiantmedialyzer.net",
   "devDependencies": {
     "babel-plugin-transform-es2015-classes": "^6.9.0",
     "babel-plugin-transform-proto-to-assign": "^6.9.0",
